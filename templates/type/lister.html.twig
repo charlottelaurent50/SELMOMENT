@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+		
+		LISTE DES TYPES</br>
+		<table>
+		{% for t in pTypes %}
+		<tr>
+			<td>{{ t.libelle }}</a></td>
+	{% else %}
+		<tr>
+		<td>Aucun type n'a été trouvé.</td>
+		</tr>
+	{% endfor %}
+</table>
+	
+	 
+    </body>
+</html>
