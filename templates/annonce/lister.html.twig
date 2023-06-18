@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+		
+		LISTE DES TYPES</br>
+		<table>
+		{% for a in pAnnonces %}
+		<tr>
+		<td><a href="{{ path('annonceConsulter', { 'id': a.id }) }}">{{ a.titre }}</a></td>
+	{% else %}
+		<tr>
+		<td>Aucune annonce n'a été trouvé.</td>
+		</tr>
+	{% endfor %}
+</table>
+	
+	 
+    </body>
+</html>

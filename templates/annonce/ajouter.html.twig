@@ -1,0 +1,16 @@
+{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+    {{ form_row(form.titre) }}
+    {{ form_row(form.descriptif) }}
+    {{ form_row(form.date_publication) }}
+    {{ form_row(form.date_expiration) }}
+    {{ form_row(form.localisation) }}
+    {{ form_row(form.nb_cloches) }}
+    {{ form_row(form.archive) }}
+    {{ form_row(form.type) }}
+    {{ form_row(form.categorie) }}
+    {{ form_row(form.statut) }}
+    {{ form_row(form.compte) }}
+    {{ form_row(form.images) }}
+
+    <button type="submit">Créer</button>
+{{ form_end(form) }}

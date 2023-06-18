@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: AnnonceRepository::class)]
 class Annonce
 {
@@ -47,14 +48,14 @@ class Annonce
     private ?Statut $statut = null;
 
     #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: Image::class)]
-    private Collection $image;
+    private Collection $images;
 
     #[ORM\ManyToOne(inversedBy: 'annonces')]
     private ?Compte $compte = null;
 
     public function __construct()
     {
-        $this->image = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -185,15 +186,15 @@ class Annonce
     /**
      * @return Collection<int, Image>
      */
-    public function getImage(): Collection
+    public function getImages(): Collection
     {
-        return $this->image;
+        return $this->images;
     }
 
     public function addImage(Image $image): self
     {
-        if (!$this->image->contains($image)) {
-            $this->image->add($image);
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
             $image->setAnnonce($this);
         }
 
@@ -202,7 +203,7 @@ class Annonce
 
     public function removeImage(Image $image): self
     {
-        if ($this->image->removeElement($image)) {
+        if ($this->images->removeElement($image)) {
             // set the owning side to null (unless already changed)
             if ($image->getAnnonce() === $this) {
                 $image->setAnnonce(null);
@@ -211,6 +212,14 @@ class Annonce
 
         return $this;
     }
+
+    public function addImages(Image $image): self
+{
+    $this->images->add($image);
+    $image->setAnnonce($this);
+
+    return $this;
+}
 
     public function getCompte(): ?Compte
     {

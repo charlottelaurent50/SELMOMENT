@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
 class Image
 {
@@ -18,7 +19,7 @@ class Image
     #[ORM\Column(length: 500)]
     private ?string $chemin = null;
 
-    #[ORM\ManyToOne(inversedBy: 'image')]
+    #[ORM\ManyToOne(inversedBy: 'images', cascade: ["persist"])]
     private ?Annonce $annonce = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
@@ -69,4 +70,6 @@ class Image
 
         return $this;
     }
+
+
 }

@@ -1,3 +1,25 @@
 controllers:
     resource: ../src/Controller/
     type: attribute
+
+
+#annonces
+
+annonceLister:
+    path: /annonce/lister
+    controller: App\Controller\AnnonceController::listerAnnonce
+
+annonceConsulter:
+    path: /annonce/consulter/{id}
+    controller: App\Controller\AnnonceController::consulterAnnonce
+
+annonceAjouter:
+    path: /annonce/ajouter/
+    controller: App\Controller\AnnonceController::ajouterAnnonce
+
+
+
+
+typeLister:
+    path: /type/lister
+    controller: App\Controller\TypeController::listerType

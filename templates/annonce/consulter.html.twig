@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+		
+		<table>
+		<tr>
+			<td>{{ annonce.titre }}</td>
+			<td>{{ annonce.descriptif}}</td>
+			{% for i in annonce.images %}
+			<img src="'{{ asset( 'uploads/' ~ i.chemin ) }}">
+			{% endfor %}
+
+		<tr>
+		</tr>
+</table>
+	
+	 
+    </body>
+</html>
