@@ -1,0 +1,22 @@
+
+{{ form_start(registrationForm) }}
+<div class="connexion">
+    <div class="contact-form">
+        {{ form_row(registrationForm.password) }}
+        {{ form_row(registrationForm.nom) }}
+        {{ form_row(registrationForm.prenom) }}
+        {{ form_row(registrationForm.adresse) }}
+        {{ form_row(registrationForm.code_postal) }}
+        {{ form_row(registrationForm.ville) }}
+        {{ form_row(registrationForm.telephone) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.actif) }}
+        {{ form_row(registrationForm.date_adhesion) }}
+        {{ form_row(registrationForm.archive) }}
+
+        {{ form_row(registrationForm.enregistrer, {
+            class : "submit",
+        }) }}
+
+	</div>
+    {{ form_end(registrationForm) }}

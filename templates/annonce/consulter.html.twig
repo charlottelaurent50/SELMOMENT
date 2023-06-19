@@ -10,7 +10,7 @@
 			<td>{{ annonce.titre }}</td>
 			<td>{{ annonce.descriptif}}</td>
 			{% for i in annonce.images %}
-			<img src="'{{ asset( 'uploads/' ~ i.chemin ) }}">
+			<img src="{{ asset( 'uploads/' ~ i.chemin ) }}">
 			{% endfor %}
 
 		<tr>

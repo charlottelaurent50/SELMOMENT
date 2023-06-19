@@ -1,11 +1,18 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-    </head>
-    <body>
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello IndexController!{% endblock %}
+
+{% block breadcrumb %} 
+{% endblock %}
+
+{% block accueil %} class="active" {% endblock %}
+
+{% block body %}
+
+
 		
-		LISTE DES TYPES</br>
+			<header id="head" class="secondary">
+LISTE DES ANNONCES</header>
 		<table>
 		{% for a in pAnnonces %}
 		<tr>
@@ -17,6 +24,4 @@
 	{% endfor %}
 </table>
 	
-	 
-    </body>
-</html>
+{% endblock %}

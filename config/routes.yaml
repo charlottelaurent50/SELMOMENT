@@ -2,6 +2,10 @@ controllers:
     resource: ../src/Controller/
     type: attribute
 
+route_accueil:
+    path: /accueil
+    controller: App\Controller\IndexController::index
+
 
 #annonces
 
@@ -23,3 +27,19 @@ annonceAjouter:
 typeLister:
     path: /type/lister
     controller: App\Controller\TypeController::listerType
+
+
+#connexion
+
+app_logout:
+    path: /logout
+    methods: GET
+
+app_login:
+    path: /login
+    controller: App\Controller\LoginController::index
+
+inscription:
+    path: /inscription
+    controller: App\Controller\RegistrationController::register
+

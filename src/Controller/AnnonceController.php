@@ -69,7 +69,7 @@ class AnnonceController extends AbstractController
     
                 // On copie le fichier dans le dossier uploads
                 $image->move(
-                    $this->getParameter('images_directory'),"/annonce",
+                    $this->getParameter('images_directory'),
                     $fichier
                 );
     

@@ -1,96 +1,187 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"    content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author"      content="Sergey Pozhilov (GetTemplate.com)">
+  
+  <title>{% block title %}{% endblock %}</title>
 
-    <link rel="stylesheet" href="{{ asset('menu/fonts/icomoon/style.css') }}">
+  <link rel="shortcut icon" href="{{asset('Progressus/images/gt_favicon.png')}}">
+  
+  <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+  <link rel="stylesheet" href="{{asset('Progressus/css/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{asset('Progressus/css/font-awesome.min.css')}}">
 
-    <link rel="stylesheet" href="{{ asset('menu/css/owl.carousel.min.css') }}">
+  <!-- Custom styles for our template -->
+  <link rel="stylesheet" href="{{asset('Progressus/css/bootstrap-theme.css')}}" media="screen" >
+  <link rel="stylesheet" href="{{asset('Progressus/css/main.css')}}">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ asset('menu/css/bootstrap.min.css') }}">
-    
-    <!-- Style -->
-    <link rel="stylesheet" href="{{ asset('menu/css/style.css') }}">
+   <style type="text/css">{% block style %}
+   .logo_img{
+    width:10%
+   }
+   {% endblock %}</style>
 
-    <title>Website Menu #1</title>
-  </head>
-  <body>
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]
+  <script src="{{asset('Progressus/js/html5shiv.js')}}')}}"></script>
+  <script src="{{asset('Progressus/js/respond.min.js')}}')}}"></script>
+  <![endif]-->
+</head>
 
-
-    <div class="site-mobile-menu site-navbar-target">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
-        </div>
+<body class="home">
+  <!-- Fixed navbar -->
+  <div class="navbar navbar-inverse navbar-fixed-top headroom" >
+    <div class="container">
+      <div class="navbar-header">
+        <!-- Button for smallest screens -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+        <a class="navbar-brand" href="{{path('route_accueil')}}"><img class="logo_img" src="{{asset('Progressus/images/logo.png')}}" alt="logo"></a>
       </div>
-      <div class="site-mobile-menu-body"></div>
-    </div>
-   
-    
-    <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
-
-      <div class="container">
-        <div class="row align-items-center">
-          
-          <div class="col-6 col-xl-2">
-            <h1 class="mb-0 site-logo"><a href="index.html">Brand<span class="text-primary">.</span> </a></h1>
-          </div>
-
-          <div class="col-12 col-md-10 d-none d-xl-block">
-            <nav class="site-navigation position-relative text-right" role="navigation">
-
-              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li><a href="#home-section" class="nav-link">Home</a></li>
-                <li class="has-children">
-                  <a href="#about-section" class="nav-link">About Us</a>
-                  <ul class="dropdown">
-                    <li><a href="#team-section" class="nav-link">Team</a></li>
-                    <li><a href="#pricing-section" class="nav-link">Pricing</a></li>
-                    <li><a href="#faq-section" class="nav-link">FAQ</a></li>
-                    <li><a href="#gallery-section" class="nav-link">Gallery</a></li>
-                    <li><a href="#services-section" class="nav-link">Services</a></li>
-                    <li><a href="#testimonials-section" class="nav-link">Testimonials</a></li>
-                    <li class="has-children">
-                      <a href="#">More Links</a>
-                      <ul class="dropdown">
-                        <li><a href="#">Menu One</a></li>
-                        <li><a href="#">Menu Two</a></li>
-                        <li><a href="#">Menu Three</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                
-                
-                <li><a href="#blog-section" class="nav-link">Blog</a></li>
-                <li><a href="{{ path('annonceLister') }}" class="nav-link">Les annonces</a></li>
-                <li><a href="{{ path('typeLister') }}" class="nav-link">Les types</a></li>
-                <li class="social"><a href="#contact-section" class="nav-link"><span class="icon-twitter"></span></a></li>
-                <li class="social"><a href="#contact-section" class="nav-link"><span class="icon-linkedin"></span></a></li>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav pull-right">
+          <li {% block accueil %} {% endblock %}><a href="{{path('route_accueil')}}">Accueil</a></li>
+          <li {% block vieselmoment %} {% endblock %}><a href="about.html">La vie de SEL Moment</a></li>
+            <li class="dropdown">
+              <a href="" class="dropdown-toggle" data-toggle="dropdown">Annonces <b class="caret"></b></a></a>
+              <ul class="dropdown-menu">
+              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li {% block offre %} {% endblock %}> <a href="{{path('annonceLister')}}">Offre</a></li>
+                <li {% block demande %} {% endblock %}><a href="sidebar-right.html">Demande</a></li>
+              {% else %}
+                <li><a href="sidebar-right.html">Réserver aux adhérents</a></li>
+              {% endif %}
               </ul>
-            </nav>
+            </li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a class="btn" href="{{ path('app_login') }}">Connexion</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div> 
+  <!-- /.navbar -->
+
+  
+  <!-- Social links. @TODO: replace by link/instructions in template -->
+  <section id="social">
+    <div class="container">
+      <div class="wrapper clearfix">
+        <!-- AddThis Button BEGIN -->
+        <div class="addthis_toolbox addthis_default_style">
+        <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+        <a class="addthis_button_tweet"></a>
+        <a class="addthis_button_linkedin_counter"></a>
+        <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+        </div>
+        <!-- AddThis Button END -->
+      </div>
+    </div>
+  </section>
+  <!-- /social links -->
+
+
+	<!-- container -->
+	<div class="container">
+		
+		<ol class="breadcrumb">
+			<li><a href="{{path('route_accueil')}}">Home</a></li>
+      {% block breadcrumb %}{% endblock %}
+		</ol>
+
+		<div class="row">
+    
+    {% block body %} 
+    
+    {% endblock %}
+
+
+		</div>
+	</div>	<!-- /container -->
+
+
+
+  <footer id="footer" class="top-space">
+
+    <div class="footer1">
+      <div class="container">
+        <div class="row">
+          
+          <div class="col-md-3 widget">
+            <h3 class="widget-title">Contact</h3>
+            <div class="widget-body">
+              <p>+234 23 9873237<br>
+                <a href="mailto:#">some.email@somewhere.com</a><br>
+                <br>
+                234 Hidden Pond Road, Ashland City, TN 37015
+              </p>	
+            </div>
           </div>
 
+          <div class="col-md-3 widget">
+            <h3 class="widget-title">Follow me</h3>
+            <div class="widget-body">
+              <p class="follow-me-icons">
+                <a href=""><i class="fa fa-twitter fa-2"></i></a>
+                <a href=""><i class="fa fa-dribbble fa-2"></i></a>
+                <a href=""><i class="fa fa-github fa-2"></i></a>
+                <a href=""><i class="fa fa-facebook fa-2"></i></a>
+              </p>	
+            </div>
+          </div>
 
-          <div class="col-6 d-inline-block d-xl-none ml-md-0 py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a></div>
+          <div class="col-md-6 widget">
+            <h3 class="widget-title">Text widget</h3>
+            <div class="widget-body">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, dolores, quibusdam architecto voluptatem amet fugiat nesciunt placeat provident cumque accusamus itaque voluptate modi quidem dolore optio velit hic iusto vero praesentium repellat commodi ad id expedita cupiditate repellendus possimus unde?</p>
+              <p>Eius consequatur nihil quibusdam! Laborum, rerum, quis, inventore ipsa autem repellat provident assumenda labore soluta minima alias temporibus facere distinctio quas adipisci nam sunt explicabo officia tenetur at ea quos doloribus dolorum voluptate reprehenderit architecto sint libero illo et hic.</p>
+            </div>
+          </div>
 
-        </div>
+        </div> <!-- /row of widgets -->
       </div>
-      
-    </header>
-
-    <div class="hero">
     </div>
 
-    <script src="{{ asset('menu/js/jquery-3.3.1.min.js')}}"></script>
-    <script src="{{ asset('menu/js/popper.min.js')}}"></script>
-    <script src="{{ asset('menu/js/bootstrap.min.js')}}"></script>
-    <script src="{{ asset('menu/js/jquery.sticky.js')}}"></script>
-    <script src="{{ asset('menu/js/main.js')}}"></script>
-  </body>
+    <div class="footer2">
+      <div class="container">
+        <div class="row">
+          
+          <div class="col-md-6 widget">
+            <div class="widget-body">
+              <p class="simplenav">
+                <a href="#">Home</a> | 
+                <a href="about.html">About</a> |
+                <a href="sidebar-right.html">Sidebar</a> |
+                <a href="contact.html">Contact</a> |
+                <b><a href="signup.html">Sign up</a></b>
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-6 widget">
+            <div class="widget-body">
+              <p class="text-right">
+                Copyright &copy; 2014, Your name. Designed by <a href="http://gettemplate.com/" rel="designer">gettemplate</a> 
+              </p>
+            </div>
+          </div>
+
+        </div> <!-- /row of widgets -->
+      </div>
+    </div>
+
+  </footer>	
+    
+
+
+
+
+  <!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="{{asset('Progressus/js/headroom.min.js')}}"></script>
+  <script src="{{asset('Progressus/js/jQuery.headroom.min.js')}}"></script>
+  <script src="{{asset('Progressus/js/template.js')}}"></script>
+</body>
 </html>
