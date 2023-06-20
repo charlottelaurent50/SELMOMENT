@@ -2,17 +2,17 @@
 
 {% block title %}Hello IndexController!{% endblock %}
 
-{% block breadcrumb %} 
+{% block annonce %} class="active" {% endblock %}
+
+{% block breadcrumb %}
+<li><a href="{{path('route_accueil')}}">Accueil</a></li> 
+<li class="active">Les annonces</li>
 {% endblock %}
 
-{% block accueil %} class="active" {% endblock %}
+{% block header %} Les annonces {% endblock %}
 
 {% block body %}
 
-
-		
-			<header id="head" class="secondary">
-LISTE DES ANNONCES</header>
 		<table>
 		{% for a in pAnnonces %}
 		<tr>

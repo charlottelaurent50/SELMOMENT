@@ -13,13 +13,17 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('password', PasswordType::class, [
+            ->add('password', PasswordType::class, array('label'=>'  '), [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
@@ -36,18 +40,14 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('nom')
-            ->add('prenom')
-            ->add('adresse')
-            ->add('code_postal')
-            ->add('ville')
-            ->add('telephone')
-            ->add('email')
-            ->add('actif')
-            ->add('date_adhesion')
-            ->add('archive')
-            ->add('enregistrer', SubmitType::class, 
-            array('label' => 'S\'inscrire') )
+            ->add('nom', TextType::class, array('label'=>'  '))
+            ->add('prenom', TextType::class, array('label'=>'  '))
+            ->add('adresse', TextType::class, array('label'=>'  '))
+            ->add('code_postal', IntegerType::class, array('label'=>'  '))
+            ->add('ville', TextType::class, array('label'=>'  '))
+            ->add('telephone', TextType::class, array('label'=>'  '))
+            ->add('email', TextType::class, array('label'=>'  '))
+
         ;
     }
 

@@ -8,20 +8,22 @@
   
   <title>{% block title %}{% endblock %}</title>
 
-  <link rel="shortcut icon" href="{{asset('Progressus/images/gt_favicon.png')}}">
+  <link rel="shortcut icon" href="{{asset('images/gt_favicon.png')}}">
   
   <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
   <link rel="stylesheet" href="{{asset('Progressus/css/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{asset('Progressus/css/font-awesome.min.css')}}">
 
+  <link href="https://www.dafontfree.net/embed/YmFyaW9sLWxpZ2h0JmRhdGEvNDkvYi8zNzk2Ny9CYXJpb2xfTGlnaHQub3Rm" rel="stylesheet" type="text/css"/>
+  <link href="https://www.dafontfree.net/embed/YmFyaW9sLXJlZ3VsYXImZGF0YS80NS9iLzY0MTcwL0JhcmlvbF9SZWd1bGFyLm90Zg" rel="stylesheet" type="text/css"/>
+  
   <!-- Custom styles for our template -->
   <link rel="stylesheet" href="{{asset('Progressus/css/bootstrap-theme.css')}}" media="screen" >
   <link rel="stylesheet" href="{{asset('Progressus/css/main.css')}}">
 
    <style type="text/css">{% block style %}
-   .logo_img{
-    width:10%
-   }
+
+  
    {% endblock %}</style>
 
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -37,26 +39,31 @@
     <div class="container">
       <div class="navbar-header">
         <!-- Button for smallest screens -->
+        <a class="navbar-brand" href="{{path('route_accueil')}}"><img class="logo_img" src="{{asset('images/logo_white.png')}}" alt="logo"></a>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-        <a class="navbar-brand" href="{{path('route_accueil')}}"><img class="logo_img" src="{{asset('Progressus/images/logo.png')}}" alt="logo"></a>
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav pull-right">
           <li {% block accueil %} {% endblock %}><a href="{{path('route_accueil')}}">Accueil</a></li>
+          <li {% block inscription %} {% endblock %}><a href="{{path('inscription')}}">Devenir membre</a></li>
           <li {% block vieselmoment %} {% endblock %}><a href="about.html">La vie de SEL Moment</a></li>
             <li class="dropdown">
               <a href="" class="dropdown-toggle" data-toggle="dropdown">Annonces <b class="caret"></b></a></a>
               <ul class="dropdown-menu">
               {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <li {% block offre %} {% endblock %}> <a href="{{path('annonceLister')}}">Offre</a></li>
-                <li {% block demande %} {% endblock %}><a href="sidebar-right.html">Demande</a></li>
+                <li {% block annonce %} {% endblock %}> <a href="{{path('annonceLister')}}">Toutes les annonces</a></li>
+                <li {% block offre %} {% endblock %}> <a href="#">Offre</a></li>
+                <li {% block demande %} {% endblock %}><a href="#">Demande</a></li>
               {% else %}
-                <li><a href="sidebar-right.html">Réserver aux adhérents</a></li>
+                <li><a href="#">Réserver aux adhérents</a></li>
               {% endif %}
               </ul>
             </li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a class="btn" href="{{ path('app_login') }}">Connexion</a></li>
+              {% if is_granted('IS_AUTHENTICATED_FULLY') %} 
+                <li><a class="btn" href="{{ path('route_accueil') }}">Profil</a></li>
+              {% else %}
+                <li><a class="btn" href="{{ path('app_login') }}">Connexion</a></li>
+              {% endif %}
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -86,11 +93,13 @@
 	<div class="container">
 		
 		<ol class="breadcrumb">
-			<li><a href="{{path('route_accueil')}}">Home</a></li>
       {% block breadcrumb %}{% endblock %}
 		</ol>
+    
 
 		<div class="row">
+
+    <header id="head" class="secondary"> {% block header %} {% endblock %}</header>
     
     {% block body %} 
     
@@ -162,7 +171,7 @@
           <div class="col-md-6 widget">
             <div class="widget-body">
               <p class="text-right">
-                Copyright &copy; 2014, Your name. Designed by <a href="http://gettemplate.com/" rel="designer">gettemplate</a> 
+                Copyright &copy; 2023, SEL Moment. Designed by <a href="http://gettemplate.com/" rel="designer">gettemplate</a> 
               </p>
             </div>
           </div>
@@ -183,5 +192,6 @@
   <script src="{{asset('Progressus/js/headroom.min.js')}}"></script>
   <script src="{{asset('Progressus/js/jQuery.headroom.min.js')}}"></script>
   <script src="{{asset('Progressus/js/template.js')}}"></script>
+  <script src="{{asset('Progressus/js/carroussel.js')}}"></script>
 </body>
 </html>

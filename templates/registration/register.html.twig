@@ -1,22 +1,97 @@
+{% extends 'base.html.twig' %}
 
-{{ form_start(registrationForm) }}
-<div class="connexion">
-    <div class="contact-form">
-        {{ form_row(registrationForm.password) }}
-        {{ form_row(registrationForm.nom) }}
-        {{ form_row(registrationForm.prenom) }}
-        {{ form_row(registrationForm.adresse) }}
-        {{ form_row(registrationForm.code_postal) }}
-        {{ form_row(registrationForm.ville) }}
-        {{ form_row(registrationForm.telephone) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.actif) }}
-        {{ form_row(registrationForm.date_adhesion) }}
-        {{ form_row(registrationForm.archive) }}
+{% block title %}Inscrption{% endblock %}
 
-        {{ form_row(registrationForm.enregistrer, {
-            class : "submit",
-        }) }}
+{% block breadcrumb %} 
+	<li class="active">Inscription</li>
+{% endblock %}
 
+{% block inscirption %} class="active" {% endblock %}
+
+{% block header %} Devenez membre {% endblock %}
+
+{% block body %}
+
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				{{ form_start(registrationForm) }}
+
+            <table>
+            <tr>
+                <td> Email </td>
+                <td>
+                    {{ form_row(registrationForm.email, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td> Mot de passe </td>
+                <td>
+                    {{ form_row(registrationForm.password, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td> Nom </td>
+                <td>
+                    {{ form_row(registrationForm.nom, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td> Prenom </td>
+                <td>
+                    {{ form_row(registrationForm.prenom, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td> Adresse </td>
+                <td>
+                    {{ form_row(registrationForm.adresse, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td> Code postal </td>
+                <td>
+                    {{ form_row(registrationForm.code_postal, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td> Ville </td>
+                <td>
+                    {{ form_row(registrationForm.ville, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td> Téléphone </td>
+                <td>
+                    {{ form_row(registrationForm.telephone, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            </table>
+                <div class="row">
+						<div class="col-lg-4 text-right">
+							<button class="btn btn-action" type="submit">S'inscrire</button>
+						</div>
+					</div>
+            {{ form_end(registrationForm) }}
+            
+
+			</div>
+		</div>
 	</div>
-    {{ form_end(registrationForm) }}
+    {% endblock %}

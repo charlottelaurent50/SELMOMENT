@@ -53,6 +53,9 @@ class Annonce
     #[ORM\ManyToOne(inversedBy: 'annonces')]
     private ?Compte $compte = null;
 
+    #[ORM\ManyToOne(inversedBy: 'annonces')]
+    private ?Domaine $domaine = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -229,6 +232,18 @@ class Annonce
     public function setCompte(?Compte $compte): self
     {
         $this->compte = $compte;
+
+        return $this;
+    }
+
+    public function getDomaine(): ?Domaine
+    {
+        return $this->domaine;
+    }
+
+    public function setDomaine(?Domaine $domaine): static
+    {
+        $this->domaine = $domaine;
 
         return $this;
     }

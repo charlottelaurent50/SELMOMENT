@@ -10,7 +10,7 @@ route_accueil:
 #annonces
 
 annonceLister:
-    path: /annonce/lister
+    path: /annonce/lister/
     controller: App\Controller\AnnonceController::listerAnnonce
 
 annonceConsulter:

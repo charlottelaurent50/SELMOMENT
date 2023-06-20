@@ -57,6 +57,7 @@ class AnnonceController extends AbstractController
         $form->handleRequest($request);
 
         $entityManager = $doctrine->getManager();
+
     
         if ($form->isSubmitted() && $form->isValid()) {
             // On récupère les images transmises
@@ -79,6 +80,7 @@ class AnnonceController extends AbstractController
                 $annonce->addImage($img);
                 $entityManager->persist($img);
             }
+            
     
             $entityManager->persist($annonce);
             $entityManager->flush();

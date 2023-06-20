@@ -1,3 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello IndexController!{% endblock %}
+
+{% block annonce %} class="active" {% endblock %}
+
+{% block breadcrumb %}
+<li><a href="{{path('route_accueil')}}">Accueil</a></li> 
+<li class="active">Ajouter une annonce</li>
+{% endblock %}
+
+{% block header %} Ajouter une annonce {% endblock %}
+
+{% block body %}
 {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
     {{ form_row(form.titre) }}
     {{ form_row(form.descriptif) }}
@@ -9,8 +23,12 @@
     {{ form_row(form.type) }}
     {{ form_row(form.categorie) }}
     {{ form_row(form.statut) }}
-    {{ form_row(form.compte) }}
+    {{ form_row(form.domaine) }}
     {{ form_row(form.images) }}
+
+    <input type="hidden" name="compte" value="{{ app.user.numAdherent }}" />
+
 
     <button type="submit">Créer</button>
 {{ form_end(form) }}
+{% endblock %}

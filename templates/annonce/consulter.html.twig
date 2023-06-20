@@ -1,22 +1,33 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-    </head>
-    <body>
-		
-		<table>
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ annonce.titre }}{% endblock %}
+
+{% block annonce %} class="active" {% endblock %}
+
+{% block breadcrumb %}
+<li><a href="{{path('route_accueil')}}">Accueil</a></li>
+ <li><a href="{{path('annonceLister')}}">Les annonces</a></li> 
+<li class="active">{{ annonce.titre }}</li>
+{% endblock %}
+
+{% block header %} {{ annonce.titre }} {% endblock %}
+
+{% block body %}
+
+	<table>
 		<tr>
 			<td>{{ annonce.titre }}</td>
 			<td>{{ annonce.descriptif}}</td>
-			{% for i in annonce.images %}
-			<img src="{{ asset( 'uploads/' ~ i.chemin ) }}">
-			{% endfor %}
+			<div class="carousel">
+				{% for i in annonce.images %}
+					<img src="{{ asset( 'uploads/' ~ i.chemin ) }}" style="width:100%">
+				{% endfor %}
 
+			</div>
 		<tr>
 		</tr>
 </table>
+
+
 	
-	 
-    </body>
-</html>
+{% endblock %}

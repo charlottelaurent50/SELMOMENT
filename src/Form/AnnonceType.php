@@ -26,13 +26,14 @@ class AnnonceType extends AbstractType
             ->add('type', EntityType::class, array('class'=>'App\Entity\Type', 'choice_label'=>'libelle','label'=>'  '))
             ->add('categorie', EntityType::class, array('class'=>'App\Entity\Categorie', 'choice_label'=>'libelle','label'=>'  '))
             ->add('statut', EntityType::class, array('class'=>'App\Entity\Statut', 'choice_label'=>'libelle','label'=>'  '))
-            ->add('compte')
+            ->add('domaine', EntityType::class, array('class'=>'App\Entity\Domaine', 'choice_label'=>'libelle','label'=>'  '))
             ->add('images', FileType::class, [
                 'label' => false,
                 'required' => false,
                 'multiple' => true,
                 'mapped'=>false
             ])
+            ->add('compte', EntityType::class, array('class'=>'App\Entity\Compte', 'choice_label'=>'num_adherent','label'=>'  '))
         ;
     }
 
