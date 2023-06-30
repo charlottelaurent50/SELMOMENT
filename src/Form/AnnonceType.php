@@ -9,6 +9,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 
 class AnnonceType extends AbstractType
@@ -16,13 +20,11 @@ class AnnonceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('titre')
-            ->add('descriptif')
-            ->add('date_publication')
-            ->add('date_expiration')
-            ->add('localisation')
-            ->add('nb_cloches')
-            ->add('archive')
+            ->add('titre', TextType::class, array('label'=>'  '))
+            ->add('descriptif', TextType::class, array('label'=>'  '))
+            ->add('date_expiration', DateType::class, array('label'=>'  '))
+            ->add('localisation', TextType::class, array('label'=>'  '))
+            ->add('nb_cloches', IntegerType::class, array('label'=>'  '))
             ->add('type', EntityType::class, array('class'=>'App\Entity\Type', 'choice_label'=>'libelle','label'=>'  '))
             ->add('categorie', EntityType::class, array('class'=>'App\Entity\Categorie', 'choice_label'=>'libelle','label'=>'  '))
             ->add('statut', EntityType::class, array('class'=>'App\Entity\Statut', 'choice_label'=>'libelle','label'=>'  '))
@@ -33,7 +35,7 @@ class AnnonceType extends AbstractType
                 'multiple' => true,
                 'mapped'=>false
             ])
-            ->add('compte', EntityType::class, array('class'=>'App\Entity\Compte', 'choice_label'=>'num_adherent','label'=>'  '))
+            ->add('compte', HiddenType::class)
         ;
     }
 

@@ -12,22 +12,74 @@
 
 {% block header %} {{ annonce.titre }} {% endblock %}
 
+{% block style %}
+td{
+    min-width : 100px !important;
+    padding : 5px;
+}
+
+.soustitre{
+	text-align:right;
+}
+{% endblock %}
+
+
 {% block body %}
 
-	<table>
-		<tr>
-			<td>{{ annonce.titre }}</td>
-			<td>{{ annonce.descriptif}}</td>
-			<div class="carousel">
+        <div id="annonce">
+
+            <div id="firstsection">
+                <div class="carousel">
 				{% for i in annonce.images %}
 					<img src="{{ asset( 'uploads/' ~ i.chemin ) }}" style="width:100%">
 				{% endfor %}
 
+				</div>
 			</div>
-		<tr>
-		</tr>
-</table>
 
+			<div id="secondsection">
+				<table class="descrAnnonce">
+					<tr>
+						<td class="soustitre">Type</td>
+						<td>{{annonce.type.libelle}} </td>
+					</tr>
+					<tr>
+						<td class="soustitre">Categorie</td>
+						<td>{{annonce.categorie.libelle}}</td>
+					</tr>
+					<tr>
+						<td class="soustitre">Statut</td>
+						<td>{{annonce.statut.libelle}}</td>
+					</tr>
+					<tr>
+						<td class="soustitre">Descrpition</td>
+						<td>{{annonce.descriptif}}</td>
+					</tr>
+					<tr>
+						<td class="soustitre">Date de publication</td>
+						<td>{{annonce.datePublication|date("d/m/Y")}}</td>
+					</tr>
+					<tr>
+						<td class="soustitre">Localisation</td>
+						<td>{{annonce.localisation}}</td>
+					</tr>
+					<tr>
+						<td class="soustitre"></td>
+						<td>{{annonce.nbCloches}} &#x1F514;</td>
+					</tr>
+				</table>
+			</div>
+			
+			<div id="thirdsection">
+			<table class="descrAnnonce">
+                <tr>
+                    <td class="soustitre">Proposé par</td>
+                    <td> {{ annonce.compte.nom }} {{ annonce.compte.prenom }}</td>
+                </tr>
+            </table>
 
+			</div>
+        </div>
+		</div>
 	
 {% endblock %}

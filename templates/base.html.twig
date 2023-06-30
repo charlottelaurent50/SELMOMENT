@@ -61,6 +61,7 @@
             </li>
               {% if is_granted('IS_AUTHENTICATED_FULLY') %} 
                 <li><a class="btn" href="{{ path('route_accueil') }}">Profil</a></li>
+                <li><a class="btn" href="{{ path('app_logout') }}">Deconnexion</a></li>
               {% else %}
                 <li><a class="btn" href="{{ path('app_login') }}">Connexion</a></li>
               {% endif %}

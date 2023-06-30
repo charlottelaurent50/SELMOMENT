@@ -17,43 +17,45 @@ class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
-    {
-        $user = new Compte();
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
+{
+    $user = new Compte();
+    $form = $this->createForm(RegistrationFormType::class, $user);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('password')->getData()
-                )
-            );
+    if ($form->isSubmitted() && $form->isValid()) {
+        // encode the plain password
+        $user->setPassword(
+            $userPasswordHasher->hashPassword(
+                $user,
+                $form->get('password')->getData()
+            )
+        );
 
-            $unique = false;
-            while (!$unique) {
-                $numAdherent = strval(rand(10000, 99999));
-                $existingUser = $entityManager->getRepository(Compte::class)->findOneBy(['num_adherent' => $numAdherent]);
-                if (!$existingUser) {
-                    $unique = true;
-                    $user->setNumAdherent($numAdherent);
-                }
-            }
+        $lastUser = $entityManager->getRepository(Compte::class)->findOneBy([], ['id' => 'DESC']);
+        $currentYear = date('Y');
+        $numAdherent = $currentYear . '001'; // Valeur par défaut si aucun utilisateur précédent n'existe
 
-            $user->setActif(false);
-            $user->setArchive(false);
-
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-            // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('route_accueil');
+        if ($lastUser) {
+            $lastNumAdherent = $lastUser->getNumAdherent();
+            $lastNumber = intval(substr($lastNumAdherent, 4)); // Obtenir la partie numérique du numéro d'adhérent précédent
+            $nextNumber = $lastNumber + 1;
+            $numAdherent = $currentYear . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
         }
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-        ]);
+        $user->setNumAdherent($numAdherent);
+        $user->setActif(false);
+        $user->setArchive(false);
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('route_accueil');
     }
+
+    return $this->render('registration/register.html.twig', [
+        'registrationForm' => $form->createView(),
+    ])
+    ;
+}
+
 }

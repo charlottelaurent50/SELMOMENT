@@ -80,6 +80,8 @@ class AnnonceController extends AbstractController
                 $annonce->addImage($img);
                 $entityManager->persist($img);
             }
+
+            $annonce->setDatePublication(new \DateTime());
             
     
             $entityManager->persist($annonce);

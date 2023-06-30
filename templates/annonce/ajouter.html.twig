@@ -12,23 +12,111 @@
 {% block header %} Ajouter une annonce {% endblock %}
 
 {% block body %}
+<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+		<div class="panel panel-default">
+			<div class="panel-body">
 {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
-    {{ form_row(form.titre) }}
-    {{ form_row(form.descriptif) }}
-    {{ form_row(form.date_publication) }}
-    {{ form_row(form.date_expiration) }}
-    {{ form_row(form.localisation) }}
-    {{ form_row(form.nb_cloches) }}
-    {{ form_row(form.archive) }}
-    {{ form_row(form.type) }}
-    {{ form_row(form.categorie) }}
-    {{ form_row(form.statut) }}
-    {{ form_row(form.domaine) }}
-    {{ form_row(form.images) }}
 
-    <input type="hidden" name="compte" value="{{ app.user.numAdherent }}" />
+<table>
+            <tr>
+                <td> Type </td>
+                <td>
+                    {{ form_row(form.type, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td> Catégorie </td>
+                <td>
+                    {{ form_row(form.categorie, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td> Statut </td>
+                <td>
+                    {{ form_row(form.statut, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+    
+            <tr>
+                <td> Domaine </td>
+                <td>
+                    {{ form_row(form.domaine, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+    
+            <tr>
+                <td> Titre </td>
+                <td>
+                    {{ form_row(form.titre, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+    
+            <tr>
+                <td> Descriptif </td>
+                <td>
+                    {{ form_row(form.descriptif, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+    
+            <tr>
+                <td> Date d'expiration </td>
+                <td>
+                    {{ form_row(form.date_expiration, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+    
+            <tr>
+                <td> Localisation </td>
+                <td>
+                    {{ form_row(form.localisation, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+    
+            <tr>
+                <td> Nombre de cloches </td>
+                <td>
+                    {{ form_row(form.nb_cloches, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+    
+            <tr>
+                <td> Image(s) </td>
+                <td>
+                    {{ form_row(form.images, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            </table>
 
-
-    <button type="submit">Créer</button>
+    {{ form_row(form.compte, {'data': app.user}) }}
+					<hr>
+    
+    <div class="row">
+		<div class="col-lg-4 text-right">
+			<button class="btn btn-action" type="submit">Créer</button>
+		</div>
+	</div>
 {{ form_end(form) }}
+</div>
+</div>
+</div>
 {% endblock %}
