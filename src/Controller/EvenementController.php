@@ -72,4 +72,12 @@ class EvenementController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    public function listerEvenement(ManagerRegistry $doctrine){
+        $repository = $doctrine->getRepository(Evenement::class);
+        $evenement = $repository->findAll();
+        return $this->render('evenement/lister.html.twig', [
+            'pEvenements' => $evenement,]);	
+            
+    }
 }

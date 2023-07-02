@@ -6,6 +6,10 @@ route_accueil:
     path: /accueil
     controller: App\Controller\IndexController::index
 
+admin:
+    path: /admin
+    controller: App\Controller\IndexController::admin
+
 
 #annonces
 
@@ -26,6 +30,11 @@ annonceAjouter:
 evenementAjouter:
     path: /evenement/ajouter/
     controller: App\Controller\EvenementController::ajouterEvenement
+
+evenementLister:
+    path: /evenement/lister/
+    controller: App\Controller\EvenementController::listerEvenement
+
 
 
 

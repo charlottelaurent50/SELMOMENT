@@ -30,6 +30,16 @@ tr{
     border-bottom:solid 1px rgba(1,1,1,0.2);
 }
 
+.tdCarousel{
+	width:30%;
+}
+
+@media (max-width: 767px) {
+	.tdCarousel{
+	width:50%;
+}
+}
+
 {% endblock %}
 
 {% block body %}
@@ -90,7 +100,7 @@ tr{
     <div class="evenement">
         <table>
             <tr>
-                <td style="width:30%">
+                <td class="tdCarousel">
                     <div class="carousel">
                         {% for i in nextEvent.images %}
                         <img src="{{ asset( 'uploads/' ~ i.chemin ) }}" style="width:100%">
@@ -112,18 +122,30 @@ tr{
     {% endif %}
 
     <h3>Les derniers événements passés</h3>
+        <div class="evenement">
+        <table>
+
     {% for event in latestEvents %}
-    <div class="evenement">
-        <p>{{ event.titre }}</p>
-        <p>{{ event.descriptif }}</p>
-        <p>{{ event.dateEv|date('d/m/Y') }}</p>
-        <div class="carousel">
-            {% for i in event.images %}
-            <img src="{{ asset( 'uploads/' ~ i.chemin ) }}" style="width:100%">
-            {% endfor %}
-        </div>
-    </div>
+            <tr>
+                <td class="tdCarousel">
+                    <div class="carousel">
+                        {% for i in event.images %}
+                        <img src="{{ asset( 'uploads/' ~ i.chemin ) }}" style="width:100%">
+                        {% endfor %}
+                    </div>
+                </td>
+				<td>
+					<b>{{ event.titre }}</b>
+					</br>
+					{{ event.descriptif }}
+					</br>
+					Le {{ event.dateEv|date('d/m/Y') }}
+				</td>
+            </tr>
+
     {% endfor %}
+        </table>
+    </div>
 
 </article>
 <!-- /Article -->

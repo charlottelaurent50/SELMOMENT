@@ -45,15 +45,11 @@ class IndexController extends AbstractController
     }
 
     public function admin(ManagerRegistry $doctrine){
-        $repository = $doctrine->getRepository(Categorie::class);
-        $cat = $repository->findAll();
 
 
 
         return $this->render('admin/index.html.twig', [
-            'pCategorie' => $cat,
-            'pGenre' => $genre,
-            'pLivre' => $livre,]);	
+            ]);	
             
     }
 }

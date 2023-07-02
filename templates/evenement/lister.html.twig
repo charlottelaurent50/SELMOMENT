@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block header %} Evenement {% endblock %}
+
+{% block style %} 
+.carousel {
+	width: 100%;
+	display: flex;
+}
+
+.carousel img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+tr{
+	border-bottom:solid 1px rgba(1,1,1,0.2);
+	}
+
+.tdCarousel{
+	width:20%;
+}
+
+@media (max-width: 767px) {
+	.tdCarousel{
+	width:50%;
+}
+
+}
+{% endblock %}
+
+{% block body %}
+ <div class="evenement">
+        <table>
+
+    {% for event in pEvenements %}
+            <tr>
+                <td class="tdCarousel">
+                    <div class="carousel">
+                        {% for i in event.images %}
+                        <img src="{{ asset( 'uploads/' ~ i.chemin ) }}">
+                        {% endfor %}
+                    </div>
+                </td>
+				<td>
+					<b>{{ event.titre }}</b>
+					</br>
+					{{ event.descriptif }}
+					</br>
+					Le {{ event.dateEv|date('d/m/Y') }}
+				</td>
+            </tr>
+
+    {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

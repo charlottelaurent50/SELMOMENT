@@ -63,7 +63,7 @@
             </li>
               {% if is_granted('IS_AUTHENTICATED_FULLY') %} 
               {% if app.user.numAdherent == "2023000"%}
-                <li {% block pageAdmin %} {% endblock %}><a class="btn" href="{{ path('route_accueil') }}">Page Admin</a></li>
+                <li {% block pageAdmin %} {% endblock %}><a class="btn" href="{{ path('admin') }}">Page Admin</a></li>
               {% endif %}
                 <li><a class="btn" href="{{ path('profil', { 'id': app.user.id }) }}">Profil</a></li>
                 <li><a class="btn" href="{{ path('app_logout') }}">Deconnexion</a></li>
