@@ -92,6 +92,14 @@ class Evenement
         return $this;
     }
 
+    public function addImages(Image $image): self
+    {
+        $this->images->add($image);
+        $image->setAnnonce($this);
+    
+        return $this;
+    }
+
     public function removeImage(Image $image): self
     {
         if ($this->images->removeElement($image)) {

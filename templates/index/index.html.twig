@@ -3,64 +3,129 @@
 {% block title %}Accueil{% endblock %}
 
 {% block breadcrumb %} 
-	<li class="active">Accueil</li>
+    <li class="active">Accueil</li>
 {% endblock %}
 
 {% block accueil %} class="active" {% endblock %}
 
 {% block header %} Accueil {% endblock %}
 
+{% block style %} 
+.carousel {
+    width: 100%;
+    display: flex;
+}
+
+.carousel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.annonce{
+    text-align:center;
+}
+
+tr{
+    border-bottom:solid 1px rgba(1,1,1,0.2);
+}
+
+{% endblock %}
+
 {% block body %}
 
-			<!-- Sidebar -->
-			<aside class="col-md-4 sidebar sidebar-left">
+<!-- Sidebar -->
+<aside class="col-md-4 sidebar sidebar-left">
 
-				<div class="row widget">
-					<div class="col-xs-12">
-						<h4>Lorem ipsum dolor sit</h4>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, ratione delectus reiciendis nulla nisi pariatur molestias animi eos repellat? Vel.</p>
-					</div>
-				</div>
-				<div class="row widget">
-					<div class="col-xs-12">
-						<h4>Lorem ipsum dolor sit</h4>
-						<p><img src="images/1.jpg" alt=""></p>
-					</div>
-				</div>
-				<div class="row widget">
-					<div class="col-xs-12">
-						<h4>Lorem ipsum dolor sit</h4>
-						<p><img src="images/2.jpg" alt=""></p>
-						<p>Qui, debitis, ad, neque reprehenderit laborum soluta dolor voluptate eligendi enim consequuntur eveniet recusandae rerum? Atque eos corporis provident tenetur.</p>
-					</div>
-				</div>
+    <div class="row widget">
+        <div class="col-xs-12">
+            <h4>Les 5 dernières annonces : </h4>
+        </div>
+    </div>
+    <div class="row widget">
+        <div class="col-xs-12">
+            <table class="annonce">
+                <thead>
+                    <tr>
+                        <td>Image(s)</td>
+                        <td>Titre</td>
+                        <td>Localisation</td>
+                    </tr>
+                </thead>
+                {% for a in pAnnonces|slice(0, 5)%}
+                <tr>
+                    <td style="width:50%">
+                        <div class="carousel">
+                            {% for i in a.images %}
+                            <img src="{{ asset( 'uploads/' ~ i.chemin ) }}" style="width:100%">
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td>{{ a.titre }}</td>
+                    <td>{{ a.localisation }}</td>
+                </tr>
+                {% else %}
+                Aucune annonce n'a été trouvée.
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 
-			</aside>
-			<!-- /Sidebar -->
+</aside>
+<!-- /Sidebar -->
 
-			<!-- Article main content -->
-			<article class="col-md-8 maincontent">
-				<header class="page-header">
-					<h1 class="page-title">Lorem ipsum dolor sit amet, consectetur.</h1>
-				</header>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium, itaque, cumque, maxime obcaecati reprehenderit ea dignissimos amet voluptatem id excepturi facilis totam veritatis maiores eveniet neque explicabo temporibus quisquam in ex ab fugiat ipsa tempore sunt corporis nostrum quam illum!</p>
-				<p>Consectetur cupiditate labore repudiandae beatae nisi fugiat facilis natus illum vitae doloremque. In, perspiciatis, natus, impedit voluptas itaque odio repudiandae placeat nisi totam repellendus earum dolores mollitia tempore quasi beatae alias cum dicta maxime laborum corporis harum porro magnam laboriosam.</p>
-				<p>Aut, eaque, minus atque alias odio mollitia cum nisi ipsa nulla natus quae minima similique ipsam aspernatur molestias animi in deleniti nam. Tempora, labore, modi eum perspiciatis doloremque sequi nam illo corporis iusto maiores nisi recusandae repellat animi reiciendis accusamus.</p>
+<!-- Article main content -->
+<article class="col-md-8 maincontent">
+    <header class="page-header">
+        <h1 class="page-title">Le SEL c'est quoi ?</h1>
+    </header>
+    <p>Le SEL est un système d'échange qui s'inscrit dans la perspective d'une alternative au système économique actuel.</p>
+    <p>Par sa réflexion et ses pratiques, il participe à la transition vers une société plus juste, respectueuse des êtres humains et de l'environnement.</p>
+    <p>SEL Moment ! est une association à but non lucratif, loi 1901. C'est l'ensemble des adhérents qui assure son bon fonctionnement.</p>
 
-				<h2>A, quibusdam, nobis, eveniet consequatur</h2>
-				<p>A, quibusdam, nobis, eveniet consequatur alias doloremque officia blanditiis fuga et numquam labore reiciendis voluptas quis repellat quos sunt non dolore consectetur at sit nam tenetur dolorem? Harum, quas, sit perspiciatis esse odit temporibus aperiam nulla aspernatur sequi fugiat tempore?</p>
-				<p>Ad velit consequuntur quo qui odit quam sapiente repudiandae et ea pariatur? Ex sapiente beatae nobis consectetur ea. Deleniti, beatae, magnam, dolorum, fuga nostrum quas laboriosam sapiente temporibus enim voluptates ullam impedit atque quae provident quos mollitia aperiam perferendis amet.</p>
+    <blockquote>Le lien est plus important que le bien</blockquote>
 
-				<blockquote>Numquam, ut iure quia facere totam quas odit illo incidunt. Voluptatem, nostrum, ex, quasi incidunt similique cum maxime expedita unde labore inventore excepturi veniam corporis sequi facere ullam voluptates amet illum quam fuga voluptatibus ipsum atque sunt eos. Ut, necessitatibus.</blockquote>
-				<p>Odit, laudantium, dolores, natus distinctio labore voluptates in inventore quasi qui nobis quis adipisci fugit id! Aliquam alias ea modi. Porro, odio, sed veniam hic numquam qui ad molestiae sint placeat expedita? Perferendis, enim qui numquam sequi obcaecati molestiae fugiat!</p>
-				<p>Aperiam, odit, quasi, voluptate fugiat quisquam velit magni provident corporis animi facilis illo eveniet eum obcaecati adipisci blanditiis quas labore doloribus eos veniam repudiandae suscipit tempora ad harum odio eius distinctio hic deleniti. Sunt fuga ad perspiciatis repellat deleniti omnis!</p>
+    <h3>Le prochain événement</h3>
+    {% if nextEvent is not null %}
+    <div class="evenement">
+        <table>
+            <tr>
+                <td style="width:30%">
+                    <div class="carousel">
+                        {% for i in nextEvent.images %}
+                        <img src="{{ asset( 'uploads/' ~ i.chemin ) }}" style="width:100%">
+                        {% endfor %}
+                    </div>
+                </td>
+				<td>
+					<b>{{ nextEvent.titre }}</b>
+					</br>
+					{{ nextEvent.descriptif }}
+					</br>
+					Le {{ nextEvent.dateEv|date('d/m/Y') }}
+				</td>
+            </tr>
+        </table>
+    </div>
+    {% else %}
+    <p>Aucun événement à venir.</p>
+    {% endif %}
 
-				<h3>Numquam, ut iure quia facere totam quas odit illo incidunt</h3>
-				<p>Est, maiores, fuga sed nemo qui veritatis ducimus placeat odit quisquam dolorum. Rem, sunt, praesentium veniam maiores quia molestias eos fugit eaque ducimus veritatis provident assumenda. Quia, fuga, voluptates voluptatibus quis enim nam asperiores aliquam dignissimos ullam recusandae debitis iste.</p>
-				<p>Dignissimos, beatae, praesentium illum eos autem perspiciatis? Minus, non, tempore, illo, mollitia exercitationem tempora quas harum odio dolores delectus quidem laudantium adipisci ducimus ullam placeat eaque minima quae iure itaque corporis magni nesciunt eius sed dolor doloremque id quasi nisi.</p>
-			</article>
-			<!-- /Article -->
+    <h3>Les derniers événements passés</h3>
+    {% for event in latestEvents %}
+    <div class="evenement">
+        <p>{{ event.titre }}</p>
+        <p>{{ event.descriptif }}</p>
+        <p>{{ event.dateEv|date('d/m/Y') }}</p>
+        <div class="carousel">
+            {% for i in event.images %}
+            <img src="{{ asset( 'uploads/' ~ i.chemin ) }}" style="width:100%">
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
 
-	
+</article>
+<!-- /Article -->
 
 {% endblock %}

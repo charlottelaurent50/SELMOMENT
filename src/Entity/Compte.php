@@ -63,6 +63,9 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'compte', targetEntity: Annonce::class)]
     private Collection $annonces;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateDernierPaiement = null;
+
     public function __construct()
     {
         $this->annonces = new ArrayCollection();
@@ -284,6 +287,18 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface
                 $annonce->setCompte(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDateDernierPaiement(): ?\DateTimeInterface
+    {
+        return $this->dateDernierPaiement;
+    }
+
+    public function setDateDernierPaiement(?\DateTimeInterface $dateDernierPaiement): static
+    {
+        $this->dateDernierPaiement = $dateDernierPaiement;
 
         return $this;
     }

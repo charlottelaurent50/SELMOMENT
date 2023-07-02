@@ -6,11 +6,11 @@
 
 {% block breadcrumb %}
 <li><a href="{{path('route_accueil')}}">Accueil</a></li>
- <li><a href="{{path('annonceLister')}}">Les annonces</a></li> 
+ <li><a href="{{path('annonceLister', { 'idType': 0 })}}">Les annonces</a></li> 
 <li class="active">{{ annonce.titre }}</li>
 {% endblock %}
 
-{% block header %} {{ annonce.titre }} {% endblock %}
+{% block header %} {{ annonce.type.libelle }} : {{ annonce.titre }} {% endblock %}
 
 {% block style %}
 td{
@@ -35,29 +35,16 @@ td{
 				{% endfor %}
 
 				</div>
+
+				<p>Publié le {{annonce.datePublication|date("d/m/Y")}}</p>
+				<p>Expire le {{annonce.dateExpiration|date("d/m/Y")}}</p>
 			</div>
 
 			<div id="secondsection">
 				<table class="descrAnnonce">
 					<tr>
-						<td class="soustitre">Type</td>
-						<td>{{annonce.type.libelle}} </td>
-					</tr>
-					<tr>
-						<td class="soustitre">Categorie</td>
-						<td>{{annonce.categorie.libelle}}</td>
-					</tr>
-					<tr>
-						<td class="soustitre">Statut</td>
-						<td>{{annonce.statut.libelle}}</td>
-					</tr>
-					<tr>
 						<td class="soustitre">Descrpition</td>
 						<td>{{annonce.descriptif}}</td>
-					</tr>
-					<tr>
-						<td class="soustitre">Date de publication</td>
-						<td>{{annonce.datePublication|date("d/m/Y")}}</td>
 					</tr>
 					<tr>
 						<td class="soustitre">Localisation</td>
@@ -74,7 +61,11 @@ td{
 			<table class="descrAnnonce">
                 <tr>
                     <td class="soustitre">Proposé par</td>
-                    <td> {{ annonce.compte.nom }} {{ annonce.compte.prenom }}</td>
+                    <td> 
+						<p>{{ annonce.compte.nom }} {{ annonce.compte.prenom }}</p>
+						<p>{{ annonce.compte.telephone }}</p>
+						<p>{{ annonce.compte.email }}</p>
+					</td>
                 </tr>
             </table>
 

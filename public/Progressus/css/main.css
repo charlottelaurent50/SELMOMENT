@@ -175,3 +175,9 @@ a:hover{
 .soustitre{
 	vertical-align: top;
   }
+
+
+/* carte liste annonces*/
+.card{
+	width : 100%;
+}

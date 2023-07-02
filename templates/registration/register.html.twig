@@ -6,9 +6,23 @@
 	<li class="active">Inscription</li>
 {% endblock %}
 
-{% block inscirption %} class="active" {% endblock %}
+{% block inscription %} class="active" {% endblock %}
 
 {% block header %} Devenez membre {% endblock %}
+
+{% block style %}
+.nomChamp{
+	text-align:right;
+    padding-right:20px;
+}
+table{
+    margin:auto ;
+}
+
+.row{
+    margin:0 !important;
+}
+{% endblock %}
 
 {% block body %}
 
@@ -19,7 +33,7 @@
 
             <table>
             <tr>
-                <td> Email </td>
+                <td class="nomChamp"> Email </td>
                 <td>
                     {{ form_row(registrationForm.email, {
                         class : "form-control"
@@ -27,7 +41,7 @@
                 </td>
             </tr>
             <tr>
-                <td> Mot de passe </td>
+                <td class="nomChamp"> Mot de passe </td>
                 <td>
                     {{ form_row(registrationForm.password, {
                         class : "form-control"
@@ -35,7 +49,7 @@
                 </td>
             </tr>
             <tr>
-                <td> Nom </td>
+                <td class="nomChamp"> Nom </td>
                 <td>
                     {{ form_row(registrationForm.nom, {
                         class : "form-control"
@@ -43,7 +57,7 @@
                 </td>
             </tr>
             <tr>
-                <td> Prenom </td>
+                <td class="nomChamp"> Prenom </td>
                 <td>
                     {{ form_row(registrationForm.prenom, {
                         class : "form-control"
@@ -51,7 +65,7 @@
                 </td>
             </tr>
             <tr>
-                <td> Adresse </td>
+                <td class="nomChamp"> Adresse </td>
                 <td>
                     {{ form_row(registrationForm.adresse, {
                         class : "form-control"
@@ -59,7 +73,7 @@
                 </td>
             </tr>
             <tr>
-                <td> Code postal </td>
+                <td class="nomChamp"> Code postal </td>
                 <td>
                     {{ form_row(registrationForm.code_postal, {
                         class : "form-control"
@@ -67,7 +81,7 @@
                 </td>
             </tr>
             <tr>
-                <td> Ville </td>
+                <td class="nomChamp"> Ville </td>
                 <td>
                     {{ form_row(registrationForm.ville, {
                         class : "form-control"
@@ -75,23 +89,29 @@
                 </td>
             </tr>
             <tr>
-                <td> Téléphone </td>
+                <td class="nomChamp"> Téléphone </td>
                 <td>
                     {{ form_row(registrationForm.telephone, {
                         class : "form-control"
                     }) }}
                 </td>
+            </tr> <tr>
+                <td class="nomChamp"> {{ form_row(registrationForm.agreeTerms, {
+                        class : "form-control"
+                    }) }} </td>
+                <td>
+                    Accepter les termes
+                </td>
             </tr>
             </table>
-            					<hr>
                 <div class="row">
-						<div class="col-lg-4 text-right">
-							<button class="btn btn-action" type="submit">S'inscrire</button>
-						</div>
-					</div>
+					<button class="btn btn-action" type="submit">S'inscrire</button>
+				</div>
             {{ form_end(registrationForm) }}
+            <hr>
             
-
+            Aprés avoir rempli le formulaire, vous recevrez par mail comment procéder au paiement de l'adhésion qui s'élève à </br>
+            Une fois le paiement versé, vous recevrez votre numéro d'adhérent pour vous connecter.
 			</div>
 		</div>
 	</div>

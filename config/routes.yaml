@@ -10,7 +10,7 @@ route_accueil:
 #annonces
 
 annonceLister:
-    path: /annonce/lister/
+    path: /annonce/lister/{idType}
     controller: App\Controller\AnnonceController::listerAnnonce
 
 annonceConsulter:
@@ -20,6 +20,12 @@ annonceConsulter:
 annonceAjouter:
     path: /annonce/ajouter/
     controller: App\Controller\AnnonceController::ajouterAnnonce
+
+
+#evenement
+evenementAjouter:
+    path: /evenement/ajouter/
+    controller: App\Controller\EvenementController::ajouterEvenement
 
 
 
@@ -43,3 +49,18 @@ inscription:
     path: /inscription
     controller: App\Controller\RegistrationController::register
 
+
+#compte
+
+compteLister:
+    path: /compte/lister
+    controller: App\Controller\CompteController::listerCompte
+
+profil:
+    path: /profil/{id}
+    controller: App\Controller\CompteController::consulterCompte
+
+mesAnnonces:
+    path: /mesAnnonces/{idCompte}
+    controller: App\Controller\CompteController::listerAnnonce
+   

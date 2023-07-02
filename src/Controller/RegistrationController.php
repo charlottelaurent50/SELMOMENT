@@ -45,6 +45,7 @@ class RegistrationController extends AbstractController
         $user->setNumAdherent($numAdherent);
         $user->setActif(false);
         $user->setArchive(false);
+        $annonce->setDateAdhesion(new \DateTime());
 
         $entityManager->persist($user);
         $entityManager->flush();

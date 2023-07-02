@@ -1,0 +1,71 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block style %}
+
+.col-md-offset-3 {
+margin-left: 0 !important;
+}
+.col-md-6 {
+width: 100% !important;
+}
+
+{% endblock %}
+
+{% block bodyAdmin %}
+
+<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+		<div class="panel panel-default">
+			<div class="panel-body">
+{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+<table>
+            <tr>
+                <td> Titre </td>
+                <td>
+                    {{ form_row(form.titre, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+    
+            <tr>
+                <td> Descriptif </td>
+                <td>
+                    {{ form_row(form.descriptif, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+    
+            <tr>
+                <td> Date de l'evenement </td>
+                <td>
+                    {{ form_row(form.date_ev, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+    
+            <tr>
+                <td> Image(s) </td>
+                <td>
+                    {{ form_row(form.images, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            </table>
+					<hr>
+    
+    <div class="row">
+		<div class="col-lg-4 text-right">
+			<button class="btn btn-action" type="submit">Créer</button>
+		</div>
+	</div>
+{{ form_end(form) }}
+</div>
+</div>
+</div>
+
+
+{% endblock %}

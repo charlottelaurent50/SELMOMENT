@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin{% endblock %}
+
+{% block breadcrumb %} 
+	<li class="active">Inscription</li>
+{% endblock %}
+
+{% block pageAdmin %} class="active" {% endblock %}
+
+{% block header %} Admin {% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block body %}
+
+
+			<!-- Sidebar -->
+			<aside class="col-md-4 sidebar sidebar-left">
+
+				<div class="row widget">
+					<div class="col-xs-12">
+                        <ul>
+                            <li><a href="{{ path('compteLister') }}">Les profils</a></li>
+                            <li><a href="{{ path('evenementAjouter') }}">Ajouter un evenement</a></li>
+                        </ul>
+					</div>
+				</div>
+
+			</aside>
+			<!-- /Sidebar -->
+
+			<!-- Article main content -->
+			<article class="col-md-8 maincontent">
+            {% block bodyAdmin %}
+            {% endblock %}
+			</article>
+			<!-- /Article -->
+
+	
+
+{% endblock %}

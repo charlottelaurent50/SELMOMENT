@@ -1,0 +1,85 @@
+{% extends 'baseProfil.html.twig' %}
+
+{% block style %}
+.soustitre{
+	text-align:right;
+}
+td{
+    min-width : 100px !important;
+    padding : 5px;
+}
+{% endblock %}
+
+{% block bodyProfil %}
+
+<table class="descrCompte">
+            <tr>
+                <td class="soustitre"> Numéro d'adhérent </td>
+                <td>
+                    {{ app.user.numAdherent }}
+                </td>
+            </tr>
+             <tr>
+                <td class="soustitre"> Actif ?</td>
+                {% if app.user.actif == 1 %}
+                <td>
+                    Votre adhésion est active jusqu'au {{ app.user.dateDernierPaiement|date('d/m/Y')|date_modify('+1 year')|date('m/d/Y') }}
+                </td>
+                {% else %}
+                <td>
+                    Votre compte n'est pas actif, vous devez payer l'adhésion
+                </td>
+                {% endif %}
+            </tr>
+            {% if app.user.dateAdhesion is not null %}
+                <tr>
+                    <td class="soustitre"> Date d'adhésion </td>
+                    <td>
+                        {{ app.user.dateAdhesion|date('d/m/Y') }}
+                    </td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td class="soustitre"> Email </td>
+                <td>
+                    {{ app.user.email }}
+                </td>
+            </tr>
+            <tr>
+                <td class="soustitre"> Nom </td>
+                <td>
+                    {{ app.user.nom }}
+                </td>
+            </tr>
+            <tr>
+                <td class="soustitre"> Prenom </td>
+                <td>
+                    {{ app.user.prenom }}
+                </td>
+            </tr>
+            <tr>
+                <td class="soustitre"> Adresse </td>
+                <td>
+                    {{ app.user.adresse }}
+                </td>
+            </tr>
+            <tr>
+                <td class="soustitre"> Code postal </td>
+                <td>
+                    {{ app.user.codePostal }}
+                </td>
+            </tr>
+            <tr>
+                <td class="soustitre"> Ville </td>
+                <td>
+                    {{ app.user.ville }}
+                </td>
+            </tr>
+            <tr>
+                <td class="soustitre"> Téléphone </td>
+                <td>
+                    {{ app.user.telephone }}
+                </td>
+            </tr>
+            </table>
+{% endblock %}

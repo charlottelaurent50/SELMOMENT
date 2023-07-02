@@ -9,6 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Annonce;
 use App\Entity\Image;
 use App\Form\AnnonceType;
+use App\Entity\Type;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Naming\SlugNamer;
@@ -28,14 +29,6 @@ class AnnonceController extends AbstractController
         ]);
     }
 
-    public function listerAnnonce(ManagerRegistry $doctrine){
-        $repository = $doctrine->getRepository(Annonce::class);
-        $annonce = $repository->findAll();
-        return $this->render('annonce/lister.html.twig', [
-            'pAnnonces' => $annonce,]);	
-            
-    }
-
     public function consulterAnnonce(ManagerRegistry $doctrine, int $id){
         $annonce = $doctrine->getRepository(Annonce::class)->find($id);
 
@@ -47,6 +40,37 @@ class AnnonceController extends AbstractController
         
         return $this->render('annonce/consulter.html.twig', [
         'annonce'=>$annonce,]);
+    }
+
+    public function listerAnnonce(Request $request,ManagerRegistry $doctrine, int $idType){
+        $typeId = $request->query->get('idType');
+
+        $repository = $doctrine->getRepository(Annonce::class);
+    
+        if ($idType === 1) {
+            $annonces = $repository->createQueryBuilder('a')
+                ->leftJoin('a.type', 't')
+                ->andWhere('t.id = :typeId')
+                ->setParameter('typeId', 1)
+                ->orderBy('a.date_publication', 'DESC') // Tri par ordre décroissant de date de publication
+                ->getQuery()
+                ->getResult();
+        } elseif ($idType === 2) {
+            $annonces = $repository->createQueryBuilder('a')
+            ->leftJoin('a.type', 't')
+            ->andWhere('t.id = :typeId')
+            ->setParameter('typeId', 2)
+            ->orderBy('a.date_publication', 'DESC') // Tri par ordre décroissant de date de publication
+            ->getQuery()
+            ->getResult();
+        }
+        else {
+            $annonces = $repository->findAll();
+        }
+    
+        return $this->render('annonce/lister.html.twig', [
+            'pAnnonces' => $annonces,
+        ]);
     }
 
     public function ajouterAnnonce(Request $request, ManagerRegistry $doctrine)
@@ -80,8 +104,10 @@ class AnnonceController extends AbstractController
                 $annonce->addImage($img);
                 $entityManager->persist($img);
             }
+            $archive=0;
 
             $annonce->setDatePublication(new \DateTime());
+            $annonce->setArchive($archive);
             
     
             $entityManager->persist($annonce);

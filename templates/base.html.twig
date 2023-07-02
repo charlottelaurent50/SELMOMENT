@@ -45,22 +45,27 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav pull-right">
           <li {% block accueil %} {% endblock %}><a href="{{path('route_accueil')}}">Accueil</a></li>
+          {% if not(is_granted('IS_AUTHENTICATED_FULLY')) %}
           <li {% block inscription %} {% endblock %}><a href="{{path('inscription')}}">Devenir membre</a></li>
+          {% endif %}
           <li {% block vieselmoment %} {% endblock %}><a href="about.html">La vie de SEL Moment</a></li>
             <li class="dropdown">
               <a href="" class="dropdown-toggle" data-toggle="dropdown">Annonces <b class="caret"></b></a></a>
               <ul class="dropdown-menu">
               {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <li {% block annonce %} {% endblock %}> <a href="{{path('annonceLister')}}">Toutes les annonces</a></li>
-                <li {% block offre %} {% endblock %}> <a href="#">Offre</a></li>
-                <li {% block demande %} {% endblock %}><a href="#">Demande</a></li>
+                <li {% block annonce %} {% endblock %}> <a href="{{path('annonceLister', { 'idType': 0 })}}">Toutes les annonces</a></li>
+                <li {% block offre %} {% endblock %}> <a href="{{path('annonceLister', { 'idType': 1 })}}">Offre</a></li>
+                <li {% block demande %} {% endblock %}><a href="{{path('annonceLister', { 'idType': 2 })}}">Demande</a></li>
               {% else %}
                 <li><a href="#">Réserver aux adhérents</a></li>
               {% endif %}
               </ul>
             </li>
               {% if is_granted('IS_AUTHENTICATED_FULLY') %} 
-                <li><a class="btn" href="{{ path('route_accueil') }}">Profil</a></li>
+              {% if app.user.numAdherent == "2023000"%}
+                <li {% block pageAdmin %} {% endblock %}><a class="btn" href="{{ path('route_accueil') }}">Page Admin</a></li>
+              {% endif %}
+                <li><a class="btn" href="{{ path('profil', { 'id': app.user.id }) }}">Profil</a></li>
                 <li><a class="btn" href="{{ path('app_logout') }}">Deconnexion</a></li>
               {% else %}
                 <li><a class="btn" href="{{ path('app_login') }}">Connexion</a></li>
