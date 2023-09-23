@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 
 class AnnonceType extends AbstractType
@@ -23,8 +24,12 @@ class AnnonceType extends AbstractType
             ->add('titre', TextType::class, array('label'=>'  '))
             ->add('descriptif', TextType::class, array('label'=>'  '))
             ->add('date_expiration', DateType::class, array('label'=>'  '))
+            ->add('pas_date_expiration', CheckboxType::class, [
+                'label'=>'  ', 
+                'required' => false, 
+                'mapped' => false])
             ->add('localisation', TextType::class, array('label'=>'  '))
-            ->add('nb_cloches', IntegerType::class, array('label'=>'  '))
+            ->add('nb_cloches', IntegerType::class, ['label'=>'  ', 'required'=>false])
             ->add('type', EntityType::class, array('class'=>'App\Entity\Type', 'choice_label'=>'libelle','label'=>'  '))
             ->add('categorie', EntityType::class, array('class'=>'App\Entity\Categorie', 'choice_label'=>'libelle','label'=>'  '))
             ->add('statut', EntityType::class, array('class'=>'App\Entity\Statut', 'choice_label'=>'libelle','label'=>'  '))
@@ -34,9 +39,7 @@ class AnnonceType extends AbstractType
                 'required' => false,
                 'multiple' => true,
                 'mapped'=>false
-            ])
-            ->add('compte', HiddenType::class)
-        ;
+            ]) ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

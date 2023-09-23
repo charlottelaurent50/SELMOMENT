@@ -4,7 +4,7 @@
 
 {% block breadcrumb %} 
 	<li><a href="{{path('route_accueil')}}">Accueil</a></li>
- 	<li class="active">Mon profil</li> 
+ 	<li class="active">Profil</li> 
 {% endblock %}
 
 {% block pageAdmin %} class="active" {% endblock %}
@@ -12,21 +12,27 @@
 {% block header %} Profil {% endblock %}
 
 {% block style %}
-
 {% endblock %}
 
 {% block body %}
 
 
 			<!-- Sidebar -->
-			<aside class="col-md-4 sidebar sidebar-left">
+			<aside class="col-md-4bis sidebar sidebar-left">
 
 				<div class="row widget">
 					<div class="col-xs-12">
+					{% if is_granted('ROLE_ADMIN') %}
+						<ul>
+                            <li><a href="{{ path('profil', { 'id': compte.id }) }}">Le profil de {{ compte.nom }} {{ compte.prenom }}</a></li>
+                            <li><a href="{{ path('mesAnnonces', { 'idCompte': compte.id }) }}">Les annonces de {{ compte.nom }} {{ compte.prenom }}</a></li>
+                        </ul>
+					{% else %}
                         <ul>
                             <li><a href="{{ path('profil', { 'id': app.user.id }) }}">Mon compte</a></li>
                             <li><a href="{{ path('mesAnnonces', { 'idCompte': app.user.id }) }}">Mes annonces</a></li>
                         </ul>
+					{% endif %}
 					</div>
 				</div>
 

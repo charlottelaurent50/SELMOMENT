@@ -56,6 +56,9 @@ class Annonce
     #[ORM\ManyToOne(inversedBy: 'annonces')]
     private ?Domaine $domaine = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $motifArchivage = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -244,6 +247,18 @@ class Annonce
     public function setDomaine(?Domaine $domaine): static
     {
         $this->domaine = $domaine;
+
+        return $this;
+    }
+
+    public function getMotifArchivage(): ?string
+    {
+        return $this->motifArchivage;
+    }
+
+    public function setMotifArchivage(?string $motifArchivage): static
+    {
+        $this->motifArchivage = $motifArchivage;
 
         return $this;
     }

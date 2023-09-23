@@ -1,7 +1,89 @@
 {% extends 'baseAdmin.html.twig' %}
 
+{% block title %}Les annonces{% endblock %}
+
+{% block annonce %} class="active" {% endblock %}
+
+{% block breadcrumb %}
+<li><a href="{{path('route_accueil')}}">Accueil</a></li> 
+<li class="active">Les annonces</li>
+{% endblock %}
+
+{% block header %} Les comptes {% endblock %}
+
+{% block style %}
+
+table{
+	text-align:center;
+}
+
+tr{
+	border-bottom:solid 1px rgba(1,1,1,0.2);
+	}
+
+.inactif{
+    background-color:rgb(255, 0, 0, 0.2);
+}
+{% endblock %}
+
 {% block bodyAdmin %}
 
-bonjour
+		<table class="card">
+		<thead>
+			<tr>
+				<td>Numéro d'adhérent</td>
+				<td>Nom</td>
+				<td>Prénom</td>
+				<td>Adresse</td>
+				<td>Code Postal</td>
+				<td>Ville</td>
+				<td>Téléphone</td>
+				<td>Adresse mail</td>
+				<td>Date d'adhésion</td>
+				<td></td>
+				<td>Date du dernier paiement</td>
+                <td></td>
+			</tr>
+		</thead>
+		{% for p in pCompte %}
+		<tr
+            {% if loop.last %}style="border-bottom:none;"{% endif %}
+            {% if p.actif == 0 %}class="inactif"{% endif %}
+        >
+				<td><a href="{{ path('mesAnnonces', { 'idCompte': p.id }) }}">{{ p.numAdherent }}</a></td>
+				<td>{{ p.nom }}</td>
+				<td>{{ p.prenom }}</td>
+				<td>{{ p.adresse }}</td>
+				<td>{{ p.codePostal }}</td>
+				<td>{{ p.ville }}</td>
+				<td>{{ p.telephone }}</td>
+				<td>{{ p.email }}</td>
+				<td>{{ p.dateAdhesion|date("d/m/Y") }}</td>
+				<td>
+                    {% if p.actif %}
+                        Compte actif
+                    {% else %} 
+                        Compte inactif
+                    {% endif %}
+                </td>
+				<td>
+                    {% if p.dateDernierPaiement %}
+                        {{ p.dateDernierPaiement|date("d/m/Y") }}
+                    {% else %} 
+                        Pas de paiement
+                    {% endif %}
+                </td>
+                <td>
+                </td>
+
+		</tr>
+	{% else %}
+		Aucune annonce n'a été trouvé.
+	{% endfor %}
+</table>
+	
+{% endblock %}
+
+{% block script %}
 
 {% endblock %}

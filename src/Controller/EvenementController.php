@@ -63,9 +63,15 @@ class EvenementController extends AbstractController
     
             $entityManager->persist($evenement);
             $entityManager->flush();
+
+            $repository = $doctrine->getRepository(Evenement::class);
+            $evenements = $repository->findBy(
+                [],
+                ['date_ev' => 'DESC']
+            );
     
-            return $this->render('index/index.html.twig', [
-            ]);
+            return $this->render('evenement/lister.html.twig', [
+                'pEvenements' => $evenements,]);	
         }
     
         return $this->render('admin/evenement/ajouter.html.twig', [
@@ -75,7 +81,10 @@ class EvenementController extends AbstractController
 
     public function listerEvenement(ManagerRegistry $doctrine){
         $repository = $doctrine->getRepository(Evenement::class);
-        $evenement = $repository->findAll();
+            $evenement = $repository->findBy(
+                [],
+                ['date_ev' => 'DESC']
+            );
         return $this->render('evenement/lister.html.twig', [
             'pEvenements' => $evenement,]);	
             

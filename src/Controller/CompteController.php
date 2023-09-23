@@ -9,6 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Annonce;
 use App\Entity\Compte;
 use Symfony\Component\HttpFoundation\Request;
+use DateTime;
 
 class CompteController extends AbstractController
 {
@@ -20,17 +21,6 @@ class CompteController extends AbstractController
         ]);
     }
 
-    public function listerCompte(ManagerRegistry $doctrine){
-        $repository = $doctrine->getRepository(Compte::class);
-        $compte = $repository->findBy(
-           [],
-           ['nom' => 'ASC']
-       );
-        return $this->render('admin/compte/lister.html.twig', [
-            'pCompte' => $compte,]);	
-            
-    }
-
     public function consulterCompte(ManagerRegistry $doctrine, int $id){
         $compte = $doctrine->getRepository(Compte::class)->find($id);
 
@@ -39,12 +29,11 @@ class CompteController extends AbstractController
                 'Aucun compte trouvé avec comme identifiant '.$id
             );
         }
-        
         return $this->render('compte/profil.html.twig', [
         'compte'=>$compte,]);
     }
 
-    public function listerAnnonce(Request $request,ManagerRegistry $doctrine, int $idCompte){
+    public function listerMesAnnonce(Request $request,ManagerRegistry $doctrine, int $idCompte){
         $compte = $doctrine->getRepository(Compte::class)->find($idCompte);
 
         $repository = $doctrine->getRepository(Annonce::class);
@@ -54,6 +43,7 @@ class CompteController extends AbstractController
     
         return $this->render('compte/mesAnnonces.html.twig', [
             'pAnnonces' => $annonces,
+            'compte' => $compte,
         ]);
     }
 }

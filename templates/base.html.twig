@@ -5,10 +5,9 @@
   <meta name="viewport"    content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author"      content="Sergey Pozhilov (GetTemplate.com)">
-  
   <title>{% block title %}{% endblock %}</title>
 
-  <link rel="shortcut icon" href="{{asset('images/gt_favicon.png')}}">
+  <link rel="icon" href="{{asset('images/icone_trans.ico')}}" />
   
   <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
   <link rel="stylesheet" href="{{asset('Progressus/css/bootstrap.min.css')}}">
@@ -22,9 +21,14 @@
   <link rel="stylesheet" href="{{asset('Progressus/css/main.css')}}">
 
    <style type="text/css">{% block style %}
-
-  
-   {% endblock %}</style>
+   {% endblock %}
+   
+   .logo{
+    width:30%;
+    float:left;
+    margin : 5px
+   }
+    </style>
 
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]
@@ -44,18 +48,19 @@
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav pull-right">
-          <li {% block accueil %} {% endblock %}><a href="{{path('route_accueil')}}">Accueil</a></li>
+          <li><a href="{{path('route_accueil')}}">Accueil</a></li>
           {% if not(is_granted('IS_AUTHENTICATED_FULLY')) %}
-          <li {% block inscription %} {% endblock %}><a href="{{path('inscription')}}">Devenir membre</a></li>
+          <li><a href="{{path('inscription')}}">Devenir membre</a></li>
           {% endif %}
-          <li {% block vieselmoment %} {% endblock %}><a href="about.html">La vie de SEL Moment</a></li>
+          <li> <a href="{{ path('evenementLister') }}">La vie de SEL Moment</a></li>
             <li class="dropdown">
               <a href="" class="dropdown-toggle" data-toggle="dropdown">Annonces <b class="caret"></b></a></a>
               <ul class="dropdown-menu">
               {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <li {% block annonce %} {% endblock %}> <a href="{{path('annonceLister', { 'idType': 0 })}}">Toutes les annonces</a></li>
-                <li {% block offre %} {% endblock %}> <a href="{{path('annonceLister', { 'idType': 1 })}}">Offre</a></li>
-                <li {% block demande %} {% endblock %}><a href="{{path('annonceLister', { 'idType': 2 })}}">Demande</a></li>
+                <li><a href="{{path('annonceAjouter')}}">Ajouter une annonce</a></li>
+                <li><a href="{{path('annonceLister', { 'idType': 0 })}}">Toutes les annonces</a></li>
+                <li><a href="{{path('annonceLister', { 'idType': 1 })}}">Offre</a></li>
+                <li><a href="{{path('annonceLister', { 'idType': 2 })}}">Demande</a></li>
               {% else %}
                 <li><a href="#">Réserver aux adhérents</a></li>
               {% endif %}
@@ -63,7 +68,7 @@
             </li>
               {% if is_granted('IS_AUTHENTICATED_FULLY') %} 
               {% if app.user.numAdherent == "2023000"%}
-                <li {% block pageAdmin %} {% endblock %}><a class="btn" href="{{ path('admin') }}">Page Admin</a></li>
+                <li><a class="btn" href="{{ path('admin') }}">Page Admin</a></li>
               {% endif %}
                 <li><a class="btn" href="{{ path('profil', { 'id': app.user.id }) }}">Profil</a></li>
                 <li><a class="btn" href="{{ path('app_logout') }}">Deconnexion</a></li>
@@ -96,13 +101,10 @@
 
 
 	<!-- container -->
-	<div class="container">
-		
+	<div class="container">		
 		<ol class="breadcrumb">
       {% block breadcrumb %}{% endblock %}
 		</ol>
-    
-
 		<div class="row">
 
     <header id="head" class="secondary"> {% block header %} {% endblock %}</header>
@@ -123,8 +125,11 @@
       <div class="container">
         <div class="row">
           
-          <div class="col-md-3 widget">
+          <div class="col-md-4 widget">
             <h3 class="widget-title">Contact</h3>
+            <div class="logo">
+              <img src="{{asset('images/gt_favicon.png')}}" alt="logo">
+            </div>
             <div class="widget-body">
               <p>+234 23 9873237<br>
                 <a href="mailto:#">some.email@somewhere.com</a><br>
@@ -134,23 +139,22 @@
             </div>
           </div>
 
-          <div class="col-md-3 widget">
-            <h3 class="widget-title">Follow me</h3>
+          <div class="col-md-4 widget">
+            <h3 class="widget-title">Text widget</h3>
             <div class="widget-body">
-              <p class="follow-me-icons">
-                <a href=""><i class="fa fa-twitter fa-2"></i></a>
-                <a href=""><i class="fa fa-dribbble fa-2"></i></a>
-                <a href=""><i class="fa fa-github fa-2"></i></a>
-                <a href=""><i class="fa fa-facebook fa-2"></i></a>
-              </p>	
+              <ul>
+                <li>Charte du sel</li>
+              </ul>
             </div>
           </div>
 
-          <div class="col-md-6 widget">
-            <h3 class="widget-title">Text widget</h3>
+          <div class="col-md-4 widget">
+            <h3 class="widget-title">Suivez-nous</h3>
             <div class="widget-body">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, dolores, quibusdam architecto voluptatem amet fugiat nesciunt placeat provident cumque accusamus itaque voluptate modi quidem dolore optio velit hic iusto vero praesentium repellat commodi ad id expedita cupiditate repellendus possimus unde?</p>
-              <p>Eius consequatur nihil quibusdam! Laborum, rerum, quis, inventore ipsa autem repellat provident assumenda labore soluta minima alias temporibus facere distinctio quas adipisci nam sunt explicabo officia tenetur at ea quos doloribus dolorum voluptate reprehenderit architecto sint libero illo et hic.</p>
+              <p class="follow-me-icons">
+                <a href=""><i class="fa fa-instagram fa-2"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=100091247266782"><i class="fa fa-facebook fa-2"></i></a>
+              </p>	
             </div>
           </div>
 
@@ -165,11 +169,10 @@
           <div class="col-md-6 widget">
             <div class="widget-body">
               <p class="simplenav">
-                <a href="#">Home</a> | 
-                <a href="about.html">About</a> |
-                <a href="sidebar-right.html">Sidebar</a> |
+                <a href="{{path('route_accueil')}}">Accueil</a> | 
+                <a href="{{path('mentionsLegales')}}">Mentions légales </a> |
+                <a href="sidebar-right.html">Politique de confidentialité</a> |
                 <a href="contact.html">Contact</a> |
-                <b><a href="signup.html">Sign up</a></b>
               </p>
             </div>
           </div>
@@ -177,7 +180,7 @@
           <div class="col-md-6 widget">
             <div class="widget-body">
               <p class="text-right">
-                Copyright &copy; 2023, SEL Moment. Designed by <a href="http://gettemplate.com/" rel="designer">gettemplate</a> 
+                Copyright &copy; 2023, SEL Moment. Réalisation du sitepar LAURENT Charlotte. 
               </p>
             </div>
           </div>
@@ -199,5 +202,35 @@
   <script src="{{asset('Progressus/js/jQuery.headroom.min.js')}}"></script>
   <script src="{{asset('Progressus/js/template.js')}}"></script>
   <script src="{{asset('Progressus/js/carroussel.js')}}"></script>
+  <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+<script>
+    function onClickBtnArchive(event) {
+        event.preventDefault();
+
+        const url = this.href;
+        const pText = this.querySelector('p.archive');
+        const tr = this.closest('tr');
+
+        axios.post(url).then(function(response) {
+            // Mettre à jour le texte du bouton en fonction de la réponse
+            if (pText.textContent === 'Archiver') {
+                pText.textContent = 'Désarchiver';
+                tr.style.backgroundColor = 'rgba(255, 0, 0, 0.2)';
+            } else {
+                pText.textContent = 'Archiver';
+                tr.style.backgroundColor = 'initial';
+            }
+        }).catch(function(error) {
+            console.error(error);
+        });
+    }
+
+    document.querySelectorAll('a.archive-button').forEach(function(link) {
+        link.addEventListener('click', onClickBtnArchive);
+    });
+</script>
+
+  {% block script %}
+  {% endblock %}
 </body>
 </html>

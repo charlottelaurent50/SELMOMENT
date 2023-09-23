@@ -6,10 +6,6 @@ route_accueil:
     path: /accueil
     controller: App\Controller\IndexController::index
 
-admin:
-    path: /admin
-    controller: App\Controller\IndexController::admin
-
 
 #annonces
 
@@ -25,6 +21,10 @@ annonceAjouter:
     path: /annonce/ajouter/
     controller: App\Controller\AnnonceController::ajouterAnnonce
 
+toggleArchive:
+    path: /toggle-archive/{id}
+    controller: App\Controller\AnnonceController::toggleArchive
+
 
 #evenement
 evenementAjouter:
@@ -34,14 +34,6 @@ evenementAjouter:
 evenementLister:
     path: /evenement/lister/
     controller: App\Controller\EvenementController::listerEvenement
-
-
-
-
-
-typeLister:
-    path: /type/lister
-    controller: App\Controller\TypeController::listerType
 
 
 #connexion
@@ -63,7 +55,7 @@ inscription:
 
 compteLister:
     path: /compte/lister
-    controller: App\Controller\CompteController::listerCompte
+    controller: App\Controller\AdminController::listerCompte
 
 profil:
     path: /profil/{id}
@@ -71,5 +63,37 @@ profil:
 
 mesAnnonces:
     path: /mesAnnonces/{idCompte}
-    controller: App\Controller\CompteController::listerAnnonce
-   
+    controller: App\Controller\CompteController::listerMesAnnonce
+
+
+
+#admin
+
+admin:
+    path: /admin
+    controller: App\Controller\IndexController::admin
+
+annoncesAdmin:
+    path: admin/annonces
+    controller: App\Controller\AdminController::listerToutesLesAnnonces
+
+compteModifierAdmin:
+    path: /admin/compte/modifier/{id}
+    controller: App\Controller\AdminController::modifierCompteAdmin
+
+domaineAjouter:
+    path: admin/domaine/ajouter
+    controller: App\Controller\DomaineController::ajouterDomaine
+
+
+
+#error
+exception_controller: 
+    path: /error/access_denied
+    controller: 'App\Controller\ErrorController::showAccessDenied'
+
+#page statique
+
+mentionsLegales:
+    path: /mentions_legales
+    controller: App\Controller\MentionsLegalesController::index

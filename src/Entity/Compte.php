@@ -66,6 +66,9 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateDernierPaiement = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $motifDesactivage = null;
+
     public function __construct()
     {
         $this->annonces = new ArrayCollection();
@@ -299,6 +302,18 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDateDernierPaiement(?\DateTimeInterface $dateDernierPaiement): static
     {
         $this->dateDernierPaiement = $dateDernierPaiement;
+
+        return $this;
+    }
+
+    public function getMotifDesactivage(): ?string
+    {
+        return $this->motifDesactivage;
+    }
+
+    public function setMotifDesactivage(?string $motifDesactivage): static
+    {
+        $this->motifDesactivage = $motifDesactivage;
 
         return $this;
     }

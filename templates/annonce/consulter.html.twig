@@ -21,6 +21,7 @@ td{
 .soustitre{
 	text-align:right;
 }
+
 {% endblock %}
 
 
@@ -31,13 +32,15 @@ td{
             <div id="firstsection">
                 <div class="carousel">
 				{% for i in annonce.images %}
-					<img src="{{ asset( 'uploads/' ~ i.chemin ) }}" style="width:100%">
+					<img src="{{ asset( 'uploads/' ~ i.chemin ) }}">
 				{% endfor %}
 
 				</div>
 
 				<p>Publié le {{annonce.datePublication|date("d/m/Y")}}</p>
+				{% if annonce.dateExpiration %}
 				<p>Expire le {{annonce.dateExpiration|date("d/m/Y")}}</p>
+				{% endif %}
 			</div>
 
 			<div id="secondsection">
@@ -62,9 +65,13 @@ td{
                 <tr>
                     <td class="soustitre">Proposé par</td>
                     <td> 
+					{% if annonce.compte %}
 						<p>{{ annonce.compte.nom }} {{ annonce.compte.prenom }}</p>
 						<p>{{ annonce.compte.telephone }}</p>
 						<p>{{ annonce.compte.email }}</p>
+					{% else %}
+						pas de compte
+					{% endif %}
 					</td>
                 </tr>
             </table>

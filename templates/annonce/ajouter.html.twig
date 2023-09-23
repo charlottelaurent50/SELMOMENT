@@ -5,11 +5,26 @@
 {% block annonce %} class="active" {% endblock %}
 
 {% block breadcrumb %}
-<li><a href="{{path('route_accueil')}}">Accueil</a></li> 
+<li><a href="{{path('route_accueil')}}">Accueil</a></li class="nomChamp"> 
 <li class="active">Ajouter une annonce</li>
 {% endblock %}
 
 {% block header %} Ajouter une annonce {% endblock %}
+
+{% block style %}
+.nomChamp{
+	text-align:right;
+    padding-right:20px;
+}
+table{
+    margin:auto ;
+}
+
+.row{
+    margin:0 !important;
+}
+
+{% endblock %}
 
 {% block body %}
 <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
@@ -19,7 +34,7 @@
 
 <table>
             <tr>
-                <td> Type </td>
+                <td class="nomChamp"> Type </td>
                 <td>
                     {{ form_row(form.type, {
                         class : "form-control"
@@ -27,7 +42,7 @@
                 </td>
             </tr>
             <tr>
-                <td> Catégorie </td>
+                <td class="nomChamp"> Catégorie </td>
                 <td>
                     {{ form_row(form.categorie, {
                         class : "form-control"
@@ -35,7 +50,7 @@
                 </td>
             </tr>
             <tr>
-                <td> Statut </td>
+                <td class="nomChamp"> Statut </td>
                 <td>
                     {{ form_row(form.statut, {
                         class : "form-control"
@@ -44,7 +59,7 @@
             </tr>
     
             <tr>
-                <td> Domaine </td>
+                <td class="nomChamp"> Domaine </td>
                 <td>
                     {{ form_row(form.domaine, {
                         class : "form-control"
@@ -53,7 +68,7 @@
             </tr>
     
             <tr>
-                <td> Titre </td>
+                <td class="nomChamp"> Titre </td>
                 <td>
                     {{ form_row(form.titre, {
                         class : "form-control"
@@ -62,7 +77,7 @@
             </tr>
     
             <tr>
-                <td> Descriptif </td>
+                <td class="nomChamp"> Descriptif </td>
                 <td>
                     {{ form_row(form.descriptif, {
                         class : "form-control"
@@ -71,16 +86,24 @@
             </tr>
     
             <tr>
-                <td> Date d'expiration </td>
+                <td class="nomChamp"> Date d'expiration </td>
                 <td>
                     {{ form_row(form.date_expiration, {
                         class : "form-control"
                     }) }}
                 </td>
             </tr>
+            <tr>
+                <td class="nomChamp">
+                    {{ form_row(form.pas_date_expiration, {
+                        class : "form-control"
+                    }) }}
+                </td>
+                <td> Pas de date d'expiration </td>
+            </tr>
     
             <tr>
-                <td> Localisation </td>
+                <td class="nomChamp"> Localisation </td>
                 <td>
                     {{ form_row(form.localisation, {
                         class : "form-control"
@@ -89,7 +112,7 @@
             </tr>
     
             <tr>
-                <td> Nombre de cloches </td>
+                <td class="nomChamp"> Nombre de cloches </td>
                 <td>
                     {{ form_row(form.nb_cloches, {
                         class : "form-control"
@@ -98,7 +121,7 @@
             </tr>
     
             <tr>
-                <td> Image(s) </td>
+                <td class="nomChamp"> Image(s) </td>
                 <td>
                     {{ form_row(form.images, {
                         class : "form-control"
@@ -106,8 +129,6 @@
                 </td>
             </tr>
             </table>
-
-    {{ form_row(form.compte, {'data': app.user}) }}
 					<hr>
     
     <div class="row">

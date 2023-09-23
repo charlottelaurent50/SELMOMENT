@@ -10,15 +10,19 @@ use App\Entity\Annonce;
 use App\Entity\Image;
 use App\Form\AnnonceType;
 use App\Entity\Type;
+use App\Entity\Compte;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Naming\SlugNamer;
 use Vich\UploaderBundle\Util\Transliterator;
 use Cocur\Slugify\Slugify;
 
-
 use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+
+#[Security('is_granted("ROLE_USERACTIF")')]
 class AnnonceController extends AbstractController
 {
     #[Route('/annonce', name: 'app_annonce')]
@@ -30,12 +34,16 @@ class AnnonceController extends AbstractController
     }
 
     public function consulterAnnonce(ManagerRegistry $doctrine, int $id){
+        if (!$this->isGranted('ROLE_USERACTIF')) {
+            return $this->forward('App\Controller\ErrorController::showAccessDenied', [
+                'exception' => new AccessDeniedException("Accès refusé ! Vous devez avoir un compte actif pour accéder à cette page.")
+            ]);   }
         $annonce = $doctrine->getRepository(Annonce::class)->find($id);
 
         if(!$annonce){
-            throw $this->createNotFoundException(
-                'Aucun annonce trouvé avec comme identifiant '.$id
-            );
+            return $this->forward('App\Controller\ErrorController::showAccessDenied', [
+                'exception' => new AccessDeniedException("Pas d'annonce avec cet identifiant")
+            ]);   ;
         }
         
         return $this->render('annonce/consulter.html.twig', [
@@ -43,7 +51,10 @@ class AnnonceController extends AbstractController
     }
 
     public function listerAnnonce(Request $request,ManagerRegistry $doctrine, int $idType){
-        $typeId = $request->query->get('idType');
+        if (!$this->isGranted('ROLE_USERACTIF')) {
+            return $this->forward('App\Controller\ErrorController::showAccessDenied', [
+                'exception' => new AccessDeniedException("Accès refusé ! Vous devez avoir un compte actif pour accéder à cette page.")
+            ]);   }
 
         $repository = $doctrine->getRepository(Annonce::class);
     
@@ -75,6 +86,10 @@ class AnnonceController extends AbstractController
 
     public function ajouterAnnonce(Request $request, ManagerRegistry $doctrine)
     {
+        if (!$this->isGranted('ROLE_USERACTIF')) {
+            return $this->forward('App\Controller\ErrorController::showAccessDenied', [
+                'exception' => new AccessDeniedException("Accès refusé ! Vous devez avoir un compte actif pour accéder à cette page.")
+            ]);   }
         $annonce = new Annonce();
     
         $form = $this->createForm(AnnonceType::class, $annonce);
@@ -86,6 +101,7 @@ class AnnonceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // On récupère les images transmises
             $images = $form->get('images')->getData();
+            $compteConnecte = $this->getUser();
     
             // On boucle sur les images
             foreach ($images as $image) {
@@ -106,8 +122,15 @@ class AnnonceController extends AbstractController
             }
             $archive=0;
 
+            if ($form->get('pas_date_expiration')->getData() === true) {
+                $annonce->setDateExpiration(null);
+            } else {
+                $annonce->setDateExpiration($form->get('date_expiration')->getData());
+            }
+
             $annonce->setDatePublication(new \DateTime());
             $annonce->setArchive($archive);
+            $annonce->setCompte($compteConnecte);
             
     
             $entityManager->persist($annonce);
@@ -122,4 +145,27 @@ class AnnonceController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    public function toggleArchive(Request $request, ManagerRegistry $doctrine, int $id)
+    {
+        $entityManager = $doctrine->getManager();
+        $annonce = $entityManager->getRepository(Annonce::class)->find($id);
+
+        if (!$annonce) {
+            throw $this->createNotFoundException('Annonce non trouvée.');
+        }
+
+        if ($annonce->isArchive() == true) {
+            $annonce->setArchive(false);
+        } elseif ($annonce->isArchive() == false) {
+            $annonce->setArchive(true);
+        }
+        $entityManager->flush();
+
+        return $this->json([
+            'code' => 200, 
+            'message' => 'annonce archivée'
+        ],200);
+    }
 }
+
+

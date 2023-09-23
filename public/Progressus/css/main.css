@@ -42,7 +42,7 @@
 h1, h2, h3, h4, h5, h6 { font-family:'bariol-regular', sans-serif; }
 h1, .h1, h2, .h2, h3, .h3 { margin-top:30px; } 
 blockquote { font-style: italic; font-family: 'bariol-light', sans-serif; color:#999; margin:30px 0 30px; }
-label { color: #777; }
+label { color: black; }
 .thin { font-weight:300; }
 .page-title { margin-top:20px; font-weight:300; }
 .text-muted { color:#888; }
@@ -58,8 +58,11 @@ img { max-width:100%; }
 img.pull-right { margin-left: 10px; }
 img.pull-left { margin-right: 10px; }
 #map { width:100%; height:280px; }
-#social { margin-top:50px; margin-bottom:50px; }
+#social { margin-top:50px; margin-bottom:100px; }
 	#social .wrapper { width:340px; margin:0 auto; }
+@media (max-width: 1500px) {
+	#social { margin-top:50px; margin-bottom:50px; }
+	}
 
 /* Main content block */
 .maincontent { }
@@ -120,13 +123,14 @@ a:hover{
 /* caroussel */
 
 .carousel {
-    float: left;
+    display: flex;
+    float: none;
     overflow: hidden;
+    height: 100%; /* Définissez la hauteur souhaitée */
 }
 
 .carousel img {
     width: 100%;
-    height: 100%;
     object-fit: cover;
 }
 
@@ -137,6 +141,7 @@ a:hover{
     transform: translateY(-50%);
     font-size: 30px;
     cursor: pointer;
+	color:black;
 }
 
 .carousel .prev {

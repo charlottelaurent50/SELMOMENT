@@ -41,11 +41,13 @@ class RegistrationController extends AbstractController
             $nextNumber = $lastNumber + 1;
             $numAdherent = $currentYear . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
         }
+        
 
         $user->setNumAdherent($numAdherent);
+        $admin->setRoles(['ROLE_USER']);
         $user->setActif(false);
         $user->setArchive(false);
-        $annonce->setDateAdhesion(new \DateTime());
+        $user->setDateAdhesion(new \DateTime());
 
         $entityManager->persist($user);
         $entityManager->flush();

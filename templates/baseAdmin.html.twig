@@ -3,7 +3,7 @@
 {% block title %}Admin{% endblock %}
 
 {% block breadcrumb %} 
-	<li class="active">Inscription</li>
+	<li class="active">Admin</li>
 {% endblock %}
 
 {% block pageAdmin %} class="active" {% endblock %}
@@ -15,16 +15,16 @@
 {% endblock %}
 
 {% block body %}
-
-
 			<!-- Sidebar -->
-			<aside class="col-md-4 sidebar sidebar-left">
+			<aside class="col-md-4bis sidebar sidebar-left">
 
 				<div class="row widget">
 					<div class="col-xs-12">
                         <ul>
                             <li><a href="{{ path('compteLister') }}">Les profils</a></li>
                             <li><a href="{{ path('evenementAjouter') }}">Ajouter un evenement</a></li>
+                            <li><a href="{{ path('annoncesAdmin') }}">Les annonces</a></li>
+							<li><a href="{{ path('domaineAjouter') }}">Ajouter un domaine</a></li>
                         </ul>
 					</div>
 				</div>
