@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscrption{% endblock %}
+
+{% block breadcrumb %} 
+	<li class="active">Inscription</li>
+{% endblock %}
+
+{% block inscription %} class="active" {% endblock %}
+
+{% block header %} Modifier un compte {% endblock %}
+
+{% block style %}
+.nomChamp{
+	text-align:right;
+    padding-right:20px;
+}
+table{
+    margin:auto ;
+}
+
+.row{
+    margin:0 !important;
+}
+{% endblock %}
+
+{% block body %}
+
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				{{ form_start(form) }}
+
+            <table>
+            <tr>
+                <td class="nomChamp"> Numéro d'adhérent </td>
+                <td>
+                    {{ form_row(form.numAdherent, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td class="nomChamp"> Date d'adhésion </td>
+                <td>
+                    {{ form_row(form.dateAdhesion, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td class="nomChamp"> Email </td>
+                <td>
+                    {{ form_row(form.email, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td class="nomChamp"> Nom </td>
+                <td>
+                    {{ form_row(form.nom, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td class="nomChamp"> Prenom </td>
+                <td>
+                    {{ form_row(form.prenom, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td class="nomChamp"> Adresse </td>
+                <td>
+                    {{ form_row(form.adresse, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td class="nomChamp"> Code postal </td>
+                <td>
+                    {{ form_row(form.code_postal, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td class="nomChamp"> Ville </td>
+                <td>
+                    {{ form_row(form.ville, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td class="nomChamp"> Téléphone </td>
+                <td>
+                    {{ form_row(form.telephone, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <hr>
+            <tr>
+                <td class="nomChamp"> Actif (cocher si compte actif)</td>
+                <td>
+                    {{ form_row(form.actif, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td class="nomChamp"> Date du dernier paiement (si actif) </td>
+                <td>
+                    {{ form_row(form.dateDernierPaiement, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td class="nomChamp"> Motif du desactivage (si desactif) </td>
+                <td>
+                    {{ form_row(form.motifDesactivage, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td class="nomChamp"> Archivé (cocher si archivé) </td>
+                <td>
+                    {{ form_row(form.archive, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+
+            </table>
+                <div class="row">
+					<button class="btn btn-action" type="submit">Modifier</button>
+				</div>
+            {{ form_end(form) }}
+            </div>
+		</div>
+	</div>
+    {% endblock %}
