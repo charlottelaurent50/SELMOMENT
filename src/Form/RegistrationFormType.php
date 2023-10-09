@@ -23,6 +23,12 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('is_adherent', CheckboxType::class, [
+                'label'=>'  ',
+                'required'=>false,
+                'mapped' => false
+            ])
+            ->add('num_adherent', TextType::class, array('label'=>'  '))
             ->add('password', PasswordType::class, array('label'=>'  '), [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller

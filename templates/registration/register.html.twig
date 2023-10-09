@@ -31,6 +31,24 @@ table{
 
             <table>
             <tr>
+                <td class="nomChamp"> Je n'ai pas encore de numéro d'adhérent </td>
+                <td>
+                    {{ form_row(registrationForm.is_adherent, {
+                        class : "form-control",
+                        id:"isAdherent"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td class="nomChamp"> Numéro d'adhérent </td>
+                <td>
+                    {{ form_row(registrationForm.num_adherent, {
+                        class : "form-control",
+                        id:"numAdherent"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
                 <td class="nomChamp"> Email </td>
                 <td>
                     {{ form_row(registrationForm.email, {
@@ -108,9 +126,35 @@ table{
             {{ form_end(registrationForm) }}
             <hr>
             
-            Aprés avoir rempli le formulaire, vous recevrez par mail comment procéder au paiement de l'adhésion qui s'élève à </br>
+            Aprés avoir rempli le formulaire, vous recevrez par mail pour procéder au paiement de l'adhésion qui s'élève à </br>
             Une fois le paiement versé, vous recevrez votre numéro d'adhérent pour vous connecter.
 			</div>
 		</div>
 	</div>
     {% endblock %}
+
+{% block script %}
+<script>
+
+const checkbox = document.getElementById("isAdherent");
+
+checkbox.setAttribute("onClick","checkAdherent()")
+
+function checkAdherent(){
+    const checkbox = document.getElementById("isAdherent");
+    const checkboxvalue = checkbox.checked;
+    const input = document.getElementById("numAdherent");
+    console.log(checkboxvalue)
+    if (checkboxvalue){
+        input.disabled=true
+        input.required=false
+    }
+    else{
+        input.disabled=false
+        input.required=true
+    }
+
+}
+
+</script>
+{% endblock %}

@@ -22,4 +22,11 @@ class ErrorController extends AbstractController
             'exception' => $exception,
         ]);
     }
+
+    public function showErrorAuthentification(\Throwable $exception): Response
+    {
+        return $this->render('error/error_authentification.html.twig', [
+            'exception' => $exception,
+        ]);
+    }
 }

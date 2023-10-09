@@ -13,6 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
@@ -22,29 +25,32 @@ class RegistrationController extends AbstractController
     $form = $this->createForm(RegistrationFormType::class, $user);
     $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        // encode the plain password
-        $user->setPassword(
-            $userPasswordHasher->hashPassword(
-                $user,
-                $form->get('password')->getData()
-            )
-        );
+    try {
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
 
-        $lastUser = $entityManager->getRepository(Compte::class)->findOneBy([], ['id' => 'DESC']);
-        $currentYear = date('Y');
-        $numAdherent = $currentYear . '001'; // Valeur par défaut si aucun utilisateur précédent n'existe
+        $numAdherent=$form->get('num_adherent')->getData();
+        if($numAdherent == null || $numAdherent == ""){
 
-        if ($lastUser) {
-            $lastNumAdherent = $lastUser->getNumAdherent();
-            $lastNumber = intval(substr($lastNumAdherent, 4)); // Obtenir la partie numérique du numéro d'adhérent précédent
-            $nextNumber = $lastNumber + 1;
-            $numAdherent = $currentYear . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+            $lastUser = $entityManager->getRepository(Compte::class)->findOneBy([], ['id' => 'DESC']);
+            $numAdherent = '9999001'; // Valeur par défaut si aucun utilisateur précédent n'existe
+
+            if ($lastUser) {
+                $lastNumAdherent = $lastUser->getNumAdherent();
+                $lastNumber = intval(substr($lastNumAdherent, 4)); // Obtenir la partie numérique du numéro d'adhérent précédent
+                $nextNumber = $lastNumber+1;
+                $numAdherent = '9999' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+            }
         }
-        
 
         $user->setNumAdherent($numAdherent);
-        $admin->setRoles(['ROLE_USER']);
+        $user->setRoles(['ROLE_USER']);
         $user->setActif(false);
         $user->setArchive(false);
         $user->setDateAdhesion(new \DateTime());
@@ -54,11 +60,14 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('route_accueil');
     }
+    } catch (\Exception $e) {
+        return $this->forward('App\Controller\ErrorController::showErrorAuthentification', [
+            'exception' => new AccessDeniedException("Erreur d'inscription, contactez un administrateur.")
+        ]);
+    }
 
     return $this->render('registration/register.html.twig', [
         'registrationForm' => $form->createView(),
-    ])
-    ;
+    ]);
 }
-
 }

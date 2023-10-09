@@ -88,9 +88,14 @@ domaineAjouter:
 
 
 #error
-exception_controller: 
+accessDenied: 
     path: /error/access_denied
     controller: 'App\Controller\ErrorController::showAccessDenied'
+
+
+errorAuthentification: 
+    path: /error/error_authentification
+    controller: 'App\Controller\ErrorController::showErrorAuthentification'
 
 #page statique
 

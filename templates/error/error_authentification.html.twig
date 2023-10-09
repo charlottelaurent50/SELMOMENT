@@ -1,0 +1,10 @@
+{# templates/error/access_denied.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur inscription{% endblock %}
+
+{% block body %}
+    <h1>Erreur lors de l'inscription</h1>
+    <p>{{ exception.message }}</p>
+{% endblock %}
