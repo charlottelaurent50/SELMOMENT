@@ -33,25 +33,17 @@ table{
 
             <table>
             <tr>
-                <td class="nomChamp"> Numéro d'adhérent </td>
-                <td>
-                    {{ form_row(form.num_adherent, {
-                        class : "form-control"
-                    }) }}
-                </td>
-            </tr>
-            <tr>
-                <td class="nomChamp"> Date d'adhésion </td>
-                <td>
-                    {{ form_row(form.dateAdhesion, {
-                        class : "form-control"
-                    }) }}
-                </td>
-            </tr>
-            <tr>
                 <td class="nomChamp"> Email </td>
                 <td>
                     {{ form_row(form.email, {
+                        class : "form-control"
+                    }) }}
+                </td>
+            </tr>
+            <tr>
+                <td class="nomChamp"> Password </td>
+                <td>
+                    {{ form_row(form.password, {
                         class : "form-control"
                     }) }}
                 </td>
@@ -100,39 +92,6 @@ table{
                 <td class="nomChamp"> Téléphone </td>
                 <td>
                     {{ form_row(form.telephone, {
-                        class : "form-control"
-                    }) }}
-                </td>
-            </tr>
-            <hr>
-            <tr>
-                <td class="nomChamp"> Actif (cocher si compte actif)</td>
-                <td>
-                    {{ form_row(form.actif, {
-                        class : "form-control"
-                    }) }}
-                </td>
-            </tr>
-            <tr>
-                <td class="nomChamp"> Date du dernier paiement (si actif) </td>
-                <td>
-                    {{ form_row(form.dateDernierPaiement, {
-                        class : "form-control"
-                    }) }}
-                </td>
-            </tr>
-            <tr>
-                <td class="nomChamp"> Archivé (cocher si archivé) </td>
-                <td>
-                    {{ form_row(form.archive, {
-                        class : "form-control"
-                    }) }}
-                </td>
-            </tr>
-            <tr>
-                <td class="nomChamp"> Motif du desactivage (si desactif) </td>
-                <td>
-                    {{ form_row(form.motifDesactivage, {
                         class : "form-control"
                     }) }}
                 </td>

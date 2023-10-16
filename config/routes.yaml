@@ -57,6 +57,10 @@ compteLister:
     path: /compte/lister
     controller: App\Controller\AdminController::listerCompte
 
+compteModifier:
+    path: /compte/modifier/{idCompte}
+    controller: App\Controller\CompteController::modifierCompte
+
 profil:
     path: /profil/{id}
     controller: App\Controller\CompteController::consulterCompte
@@ -85,6 +89,10 @@ domaineAjouter:
     path: admin/domaine/ajouter
     controller: App\Controller\DomaineController::ajouterDomaine
 
+adminAjouter:
+    path: admin/create
+    controller: App\Controller\AdminController::createAdmin
+
 
 
 #error
@@ -101,4 +109,8 @@ errorAuthentification:
 
 mentionsLegales:
     path: /mentions_legales
-    controller: App\Controller\MentionsLegalesController::index
+    controller: App\Controller\PageJuridiqueController::mentionsLegales
+
+politiqueConfidentialite:
+    path: /politique_confidentialite
+    controller: App\Controller\PageJuridiqueController::politiqueConfidentialite

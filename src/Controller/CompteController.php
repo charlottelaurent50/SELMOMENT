@@ -10,6 +10,13 @@ use App\Entity\Annonce;
 use App\Entity\Compte;
 use Symfony\Component\HttpFoundation\Request;
 use DateTime;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
+
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+
+use App\Form\CompteModifierType;
 
 class CompteController extends AbstractController
 {
@@ -46,4 +53,48 @@ class CompteController extends AbstractController
             'compte' => $compte,
         ]);
     }
+
+    public function modifierCompte(ManagerRegistry $doctrine, $idCompte, Request $request, UserPasswordHasherInterface $userPasswordHasher){
+        $user = $this->getUser();
+        $compte = $doctrine->getRepository(Compte::class)->find($idCompte);
+     
+ 
+        if (!$compte) {
+            throw $this->createNotFoundException('Aucun compte trouvé avec le numéro '.$idCompte);
+        }
+        elseif ($user !== $compte) {
+            return $this->forward('App\Controller\ErrorController::showAccessDenied', [
+                'exception' => new AccessDeniedException("Accès refusé ! Ce n'est pas votre compte")
+            ]); 
+        }
+        else
+        {
+                $form = $this->createForm(CompteModifierType::class, $compte);
+                $form->handleRequest($request);
+                
+     
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $user->setPassword(
+                        $userPasswordHasher->hashPassword(
+                            $user,
+                            $form->get('password')->getData()
+                        )
+                    );
+     
+                     $compte = $form->getData();
+                     
+                     
+                     $entityManager = $doctrine->getManager();
+                     $entityManager->persist($compte);
+                     $entityManager->flush();
+                     
+        return $this->render('compte/profil.html.twig', [
+            'compte'=>$compte,]);
+
+               }
+               else{
+                    return $this->render('compte/modifier.html.twig', array('form' => $form->createView(),));
+               }
+            }
+     }
 }

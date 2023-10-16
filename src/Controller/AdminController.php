@@ -15,9 +15,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-
-
-use App\Form\CompteModifierType;
+use App\Form\CompteModifierAdminType;
 
 
 #[Security('is_granted("ROLE_ADMIN")')]
@@ -74,7 +72,6 @@ class AdminController extends AbstractController
             ]);  
         }
  
-        //récupération de l'étudiant dont l'id est passé en paramètre
         $compte = $doctrine->getRepository(Compte::class)->find($id);
      
         if (!$compte) {
@@ -83,7 +80,7 @@ class AdminController extends AbstractController
         }
         else
         {
-                $form = $this->createForm(CompteModifierType::class, $compte);
+                $form = $this->createForm(CompteModifierAdminType::class, $compte);
                 $form->handleRequest($request);
      
                 if ($form->isSubmitted() && $form->isValid()) {
@@ -103,8 +100,9 @@ class AdminController extends AbstractController
                     }
                      $entityManager = $doctrine->getManager();
                      $entityManager->persist($compte);
-                     $entityManager->flush();return $this->render('compte/profil.html.twig', [
-                        'compte'=>$compte,]);
+                     $entityManager->flush();
+                     return $this->redirectToRoute('compteLister');
+
                }
                else{
                     return $this->render('admin/compte/modifier.html.twig', array('form' => $form->createView(),));

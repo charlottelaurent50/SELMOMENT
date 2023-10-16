@@ -1,89 +1,103 @@
 {% extends 'baseAdmin.html.twig' %}
 
-{% block title %}Les annonces{% endblock %}
-
-{% block annonce %} class="active" {% endblock %}
-
-{% block breadcrumb %}
-<li><a href="{{path('route_accueil')}}">Accueil</a></li> 
-<li class="active">Les annonces</li>
+{% block title %}Les comptes
 {% endblock %}
 
-{% block header %} Les comptes {% endblock %}
+{% block breadcrumb %}
+	<li>
+		<a href="{{path('route_accueil')}}">Accueil</a>
+	</li>
+	<li class="active">Les comptes</li>
+{% endblock %}
+
+{% block header %}
+	Les comptes
+{% endblock %}
 
 {% block style %}
 
-table{
-	text-align:center;
-}
+	table{
+			text-align:center;
+			width: 100%;
+			}
+			
+			tr{
+				border-bottom:solid 1px rgba(1,1,1,0.2);
+				}
+			
+			.inactif{
+			    background-color:rgb(255, 0, 0, 0.2);
+			}
 
-tr{
-	border-bottom:solid 1px rgba(1,1,1,0.2);
-	}
+			.adesaciver{
+			    background-color:rgb(255, 165, 0, 0.2);
+			}
+		
+			.table-responsive {
+				overflow-x: auto;
+			}
 
-.inactif{
-    background-color:rgb(255, 0, 0, 0.2);
-}
 {% endblock %}
 
 {% block bodyAdmin %}
 
-		<table class="card">
-		<thead>
-			<tr>
-				<td>Numéro d'adhérent</td>
-				<td>Nom</td>
-				<td>Prénom</td>
-				<td>Adresse</td>
-				<td>Code Postal</td>
-				<td>Ville</td>
-				<td>Téléphone</td>
-				<td>Adresse mail</td>
-				<td>Date d'adhésion</td>
-				<td></td>
-				<td>Date du dernier paiement</td>
-                <td></td>
-			</tr>
-		</thead>
-		{% for p in pCompte %}
-		<tr
-            {% if loop.last %}style="border-bottom:none;"{% endif %}
-            {% if p.actif == 0 %}class="inactif"{% endif %}
-        >
-				<td><a href="{{ path('mesAnnonces', { 'idCompte': p.id }) }}">{{ p.numAdherent }}</a></td>
-				<td>{{ p.nom }}</td>
-				<td>{{ p.prenom }}</td>
-				<td>{{ p.adresse }}</td>
-				<td>{{ p.codePostal }}</td>
-				<td>{{ p.ville }}</td>
-				<td>{{ p.telephone }}</td>
-				<td>{{ p.email }}</td>
-				<td>{{ p.dateAdhesion|date("d/m/Y") }}</td>
-				<td>
-                    {% if p.actif %}
-                        Compte actif
-                    {% else %} 
-                        Compte inactif
-                    {% endif %}
-                </td>
-				<td>
-                    {% if p.dateDernierPaiement %}
-                        {{ p.dateDernierPaiement|date("d/m/Y") }}
-                    {% else %} 
-                        Pas de paiement
-                    {% endif %}
-                </td>
-                <td>
-                </td>
+	{% set now = "now"|date("m/d/Y") %}
+	{% set diff = now|date_modify("-1 year") %}
+	<div class="table-responsive">
 
-		</tr>
-	{% else %}
-		Aucune annonce n'a été trouvé.
-	{% endfor %}
-</table>
-	
+		<table>
+			<thead>
+				<tr>
+					<td>Numéro d'adhérent</td>
+					<td>Nom</td>
+					<td>Prénom</td>
+					<td>Date d'adhésion</td>
+					<td></td>
+					<td>Date du dernier paiement</td>
+					<td></td>
+				</tr>
+			</thead>
+			{% for p in pCompte %}
+				<tr 
+				{% if loop.last %} style="border-bottom:none;" {% endif %} 
+				{% if p.actif == 0 %} class="inactif" {% endif %} 
+				{% if p.dateDernierPaiement < diff and p.actif %}
+								class="adesaciver"
+							{% endif %}>
+					<td>
+						<a href="{{ path('profil', { 'id': p.id }) }}">{{ p.numAdherent }}</a>
+					</td>
+					<td>{{ p.nom }}</td>
+					<td>{{ p.prenom }}</td>
+					<td>{{ p.dateAdhesion|date("d/m/Y") }}</td>
+
+					<td>
+						{% if p.actif %}
+							Compte actif
+						{% else %}
+							Compte inactif
+						{% endif %}
+					</td>
+					<td>
+						{% if p.dateDernierPaiement %}
+							{{ p.dateDernierPaiement|date("d/m/Y") }} <br>
+							{% if p.dateDernierPaiement < diff %}
+								Il y a plus d'un an
+							{% endif %}
+						{% else %}
+							Pas de paiement
+						{% endif %}
+					</td>
+					<td>
+						<a href="{{ path('compteModifierAdmin', { 'id': p.id }) }}">Modifier</a>
+					</td>
+
+				</tr>
+			{% else %}
+				Aucune annonce n'a été trouvé.
+			{% endfor %}
+		</table>
+	</div>
 {% endblock %}
 
-{% block script %}
-
-{% endblock %}
+{% block script %}{% endblock %}

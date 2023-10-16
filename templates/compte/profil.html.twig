@@ -44,6 +44,14 @@ td{
                     </td>
                 </tr>
             {% endif %}
+            {% if compte.dateDernierPaiement is not null %}
+                <tr>
+                    <td class="soustitre"> Date du dernier paiement </td>
+                    <td>
+                        {{ compte.dateDernierPaiement|date('d/m/Y') }}
+                    </td>
+                </tr>
+            {% endif %}
             <tr>
                 <td class="soustitre"> Email </td>
                 <td>
@@ -85,6 +93,12 @@ td{
                 <td>
                     {{ compte.telephone }}
                 </td>
+            </tr>
+            <tr>
+            <td></td>
+            <td>
+            	<a href="{{ path('compteModifier', { 'idCompte': compte.id }) }}">Modifier</a>
+            </td>
             </tr>
             </table>
 {% endblock %}

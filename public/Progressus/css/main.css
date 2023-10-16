@@ -186,3 +186,8 @@ a:hover{
 .card{
 	width : 100%;
 }
+
+
+.body{
+	min-height:50vh !important;
+}
