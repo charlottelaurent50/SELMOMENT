@@ -51,6 +51,7 @@ tr{
 				<td>Titre</td>
 				<td>Localisation</td>
 				<td> Archivage </td>
+				<td></td>
 			</tr>
 		</thead>
 		{% for a in pAnnonces %}
@@ -74,6 +75,7 @@ tr{
                     {% endif %}
                 </a>
 			</td>
+			<td><a href="{{ path('annonceModifier', { 'id': a.id }) }}">Modifier</a></td>
 
 		</tr>
 	{% else %}

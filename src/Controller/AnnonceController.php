@@ -173,14 +173,16 @@ class AnnonceController extends AbstractController
 
     public function modifierAnnonce(Request $request, ManagerRegistry $doctrine, int $id)
 {
-    if (!$this->isGranted('ROLE_USERACTIF')) {
-        return $this->forward('App\Controller\ErrorController::showAccessDenied', [
-            'exception' => new AccessDeniedException("Accès temporairement refusé. Veuillez patienter, votre profil est en attente de confirmation de la part de l’administrateur.")
-        ]);
-    }
+    
 
     $entityManager = $doctrine->getManager();
     $annonce = $entityManager->getRepository(Annonce::class)->find($id);
+    $user = $this->getUser();
+    if ($user !== $annonce->getCompte()) {
+        return $this->forward('App\Controller\ErrorController::showAccessDenied', [
+            'exception' => new AccessDeniedException("Accès refusé ! Ce n'est pas une de vos annonces")
+        ]); 
+    }
 
     if (!$annonce) {
         throw $this->createNotFoundException('Annonce non trouvée.');
