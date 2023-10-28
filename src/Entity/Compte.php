@@ -64,7 +64,7 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $annonces;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $dateDernierPaiement = null;
+    private ?\DateTimeInterface $date_expiration = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $motifDesactivage = null;
@@ -294,14 +294,14 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getDateDernierPaiement(): ?\DateTimeInterface
+    public function getDateExpiration(): ?\DateTimeInterface
     {
-        return $this->dateDernierPaiement;
+        return $this->date_expiration;
     }
 
-    public function setDateDernierPaiement(?\DateTimeInterface $dateDernierPaiement): static
+    public function setDateExpiration(?\DateTimeInterface $date_expiration): static
     {
-        $this->dateDernierPaiement = $dateDernierPaiement;
+        $this->date_expiration = $date_expiration;
 
         return $this;
     }

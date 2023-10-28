@@ -23,12 +23,7 @@ td{
                 <td class="soustitre"> Actif ?</td>
                 {% if compte.actif == 1 %}
                 <td>
-                {% if compte.dateDernierPaiement %}
-                    {% set expirationDate = compte.dateDernierPaiement|date_modify('+1 year') %}
-                    Votre adhésion est active jusqu'au {{ expirationDate|date('d/m/Y') }}.
-                {% else %}
-                    Votre adhésion est actif mais il n'y a pas de date de dernier paiement.
-                {% endif %}
+                    Votre adhésion est active.
                 </td>
                 {% else %}
                 <td>
@@ -44,11 +39,11 @@ td{
                     </td>
                 </tr>
             {% endif %}
-            {% if compte.dateDernierPaiement is not null %}
+            {% if compte.dateExpiration is not null %}
                 <tr>
-                    <td class="soustitre"> Date du dernier paiement </td>
+                    <td class="soustitre"> Date d'expiration </td>
                     <td>
-                        {{ compte.dateDernierPaiement|date('d/m/Y') }}
+                        {{ compte.dateExpiration|date('d/m/Y') }}
                     </td>
                 </tr>
             {% endif %}

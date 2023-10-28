@@ -41,6 +41,13 @@ tr{
 }
 }
 
+.citation{
+    font-weight: bold;
+    font-size : large;
+    color:#E19137 !important;
+    margin : 20px
+}
+
 {% endblock %}
 
 {% block body %}
@@ -95,7 +102,7 @@ tr{
     <p>Par sa réflexion et ses pratiques, il participe à la transition vers une société plus juste, respectueuse des êtres humains et de l'environnement.</p>
     <p>SEL Moment ! est une association à but non lucratif, loi 1901. C'est l'ensemble des adhérents qui assure son bon fonctionnement.</p>
 
-    <blockquote>Le lien est plus important que le bien</blockquote>
+    <p class="citation">Le lien est plus important que le bien</p>
 
     <h3>Le prochain événement</h3>
     {% if nextEvent is not null %}

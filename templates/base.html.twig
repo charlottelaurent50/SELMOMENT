@@ -35,9 +35,9 @@
 
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]
-				    <script src="{{asset('Progressus/js/html5shiv.js')}}')}}"></script>
-				    <script src="{{asset('Progressus/js/respond.min.js')}}')}}"></script>
-				  <![endif]-->
+																          <script src="{{asset('Progressus/js/html5shiv.js')}}')}}"></script>
+																          <script src="{{asset('Progressus/js/respond.min.js')}}')}}"></script>
+																  <![endif]-->
 	</head>
 
 	<body
@@ -69,51 +69,51 @@
 							<a href="{{ path('evenementLister') }}">La vie de SEL Moment</a>
 						</li>
 						<li class="dropdown">
-							<a href="" class="dropdown-toggle" data-toggle="dropdown">Annonces
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Annonces
 								<b class="caret"></b>
 							</a>
+							<ul class="dropdown-menu">
+								{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+									<li>
+										<a href="{{path('annonceAjouter')}}">Ajouter une annonce</a>
+									</li>
+									<li>
+										<a href="{{path('annonceLister', { 'idType': 0 })}}">Toutes les annonces</a>
+									</li>
+									<li>
+										<a href="{{path('annonceLister', { 'idType': 1 })}}">Offre</a>
+									</li>
+									<li>
+										<a href="{{path('annonceLister', { 'idType': 2 })}}">Demande</a>
+									</li>
+								{% else %}
+									<li>
+										<a href="#">Réserver aux adhérents</a>
+									</li>
+								{% endif %}
+							</ul>
 						</li>
-					</a>
-					<ul class="dropdown-menu">
 						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+							{% if app.user.numAdherent == "2023000"%}
+								<li>
+									<a class="btn" href="{{ path('admin') }}">Page Admin</a>
+								</li>
+							{% endif %}
 							<li>
-								<a href="{{path('annonceAjouter')}}">Ajouter une annonce</a>
+								<a class="btn" href="{{ path('profil', { 'id': app.user.id }) }}">Profil</a>
 							</li>
 							<li>
-								<a href="{{path('annonceLister', { 'idType': 0 })}}">Toutes les annonces</a>
-							</li>
-							<li>
-								<a href="{{path('annonceLister', { 'idType': 1 })}}">Offre</a>
-							</li>
-							<li>
-								<a href="{{path('annonceLister', { 'idType': 2 })}}">Demande</a>
+								<a class="btn" href="{{ path('app_logout') }}">Deconnexion</a>
 							</li>
 						{% else %}
 							<li>
-								<a href="#">Réserver aux adhérents</a>
+								<a class="btn" href="{{ path('app_login') }}">Connexion</a>
 							</li>
 						{% endif %}
 					</ul>
-				</li>
-				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-					{% if app.user.numAdherent == "2023000"%}
-						<li>
-							<a class="btn" href="{{ path('admin') }}">Page Admin</a>
-						</li>
-					{% endif %}
-					<li>
-						<a class="btn" href="{{ path('profil', { 'id': app.user.id }) }}">Profil</a>
-					</li>
-					<li>
-						<a class="btn" href="{{ path('app_logout') }}">Deconnexion</a>
-					</li>
-				{% else %}
-					<li>
-						<a class="btn" href="{{ path('app_login') }}">Connexion</a>
-					</li>
-				{% endif %}
-			</ul>
-		</div><!--/.nav-collapse --></body>
+				</div><!--/.nav-collapse --></body>
+		</html>
+	</body>
 </html></div></div><!-- /.navbar --><!-- Social links. @TODO: replace by link/instructions in template --><section id="social"><div class="container">
 <div
 	class="wrapper clearfix">
@@ -131,97 +131,105 @@
 
 	<header id="head" class="secondary"> {% block header %}{% endblock %}
 		</header>
-  <div class="body">
-
-		{% block body %}{% endblock %}
-  </div>
+		<div class="body"> {% block body %}{% endblock %}
+			</div>
 
 
+		</div>
 	</div>
-</div>
-<!-- /container -->
+	<!-- /container -->
 
 
-<footer id="footer" class="top-space">
+	<footer id="footer" class="top-space">
 
-	<div class="footer1">
+		<div class="footer1">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-md-4 widget">
+						<h3 class="widget-title">À propos</h3>
+						<div class="logo">
+							<img src="{{asset('images/gt_favicon.png')}}" alt="logo">
+						</div>
+						<div class="widget-body">
+							<a href="mailto:#">selmomentvilledieu@gmail.com</a><br>
+							<br>
+							Mairie, Place de la République 50800 Villedieu-les-Poêles-Rouffigny
+						</p>
+					</div>
+				</div>
+
+				<div class="col-md-4 widget">
+					<h3 class="widget-title">Documents</h3>
+					<div class="widget-body">
+						<ul>
+							<li><a href="{{asset('pdf/CHARTE.pdf')}}" target="_blank">Charte du sel</a></li>
+							<li>
+								<a href="{{path('mentionsLegales')}}">Mentions légales
+								</a>
+							</li>
+							<li>
+								<a href="{{path('politiqueConfidentialite')}}">Politique de confidentialité</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-md-4 widget">
+					<h3 class="widget-title">Suivez-nous</h3>
+					<div class="widget-body">
+						<p class="follow-me-icons">
+							<a href="https://www.facebook.com/profile.php?id=100091247266782">
+								<i class="fa fa-facebook fa-2"></i>
+							</a>
+						</p>
+					</div>
+				</div>
+
+			</div>
+			<!-- /row of widgets -->
+		</div>
+	</div>
+
+	<div class="footer2">
 		<div class="container">
 			<div class="row">
 
-				<div class="col-md-4 widget">
-					<h3 class="widget-title">À propos</h3>
-					<div class="logo">
-						<img src="{{asset('images/gt_favicon.png')}}" alt="logo">
-					</div>
+				<div class="col-md-6 widget">
 					<div class="widget-body">
-						<a href="mailto:#">selmomentvilledieu@gmail.com</a><br>
-						<br>
-						Mairie, Place de la République 50800 Villedieu-les-Poêles-Rouffigny
-					</p>
-				</div>
-			</div>
-
-			<div class="col-md-4 widget">
-				<h3 class="widget-title">Documents</h3>
-				<div class="widget-body">
-					<ul>
-						<li>Charte du sel</li>
-						<li>
+						<p class="simplenav">
+							<a href="{{path('route_accueil')}}">Accueil</a>
+							|
 							<a href="{{path('mentionsLegales')}}">Mentions légales
 							</a>
-						</li>
-						<li>
+							|
 							<a href="{{path('politiqueConfidentialite')}}">Politique de confidentialité</a>
-						</li>
-					</ul>
+						</p>
+					</div>
 				</div>
-			</div>
 
-			<div class="col-md-4 widget">
-				<h3 class="widget-title">Suivez-nous</h3>
-				<div class="widget-body">
-					<p class="follow-me-icons">
-						<a href="https://www.facebook.com/profile.php?id=100091247266782">
-							<i class="fa fa-facebook fa-2"></i>
-						</a>
-					</p>
+				<div class="col-md-6 widget">
+					<div class="widget-body">
+						<p class="text-right">
+							Copyright &copy; 2023, SEL Moment. Réalisation du site par LAURENT Charlotte.
+						</p>
+					</div>
 				</div>
-			</div>
 
+			</div>
+			<!-- /row of widgets -->
 		</div>
-		<!-- /row of widgets -->
 	</div>
-</div>
-
-<div class="footer2">
-	<div class="container">
-		<div class="row">
-
-			<div class="col-md-6 widget">
-				<div class="widget-body">
-					<p class="simplenav">
-						<a href="{{path('route_accueil')}}">Accueil</a>
-						|
-						<a href="{{path('mentionsLegales')}}">Mentions légales
-						</a>
-						|
-						<a href="{{path('politiqueConfidentialite')}}">Politique de confidentialité</a>
-					</p>
-				</div>
-			</div>
-
-			<div class="col-md-6 widget">
-				<div class="widget-body">
-					<p class="text-right">
-						Copyright &copy; 2023, SEL Moment. Réalisation du site par LAURENT Charlotte.
-					</p>
-				</div>
-			</div>
-
-		</div>
-		<!-- /row of widgets -->
-	</div>
-</div></footer><!-- JavaScript libs are placed at the end of the document so the pages load faster --> <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script> <script src="{{asset('Progressus/js/headroom.min.js')}}"></script> <script src="{{asset('Progressus/js/jQuery.headroom.min.js')}}"></script> <script src="{{asset('Progressus/js/template.js')}}"></script> <script src="{{asset('Progressus/js/carroussel.js')}}"></script> <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script> <script>
+</footer>
+<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+ <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+ <script src="{{asset('Progressus/js/headroom.min.js')}}"></script>
+ <script src="{{asset('Progressus/js/jQuery.headroom.min.js')}}"></script>
+ <script src="{{asset('Progressus/js/template.js')}}"></script>
+ <script src="{{asset('Progressus/js/carroussel.js')}}"></script>
+ <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+ <script>
 		    function onClickBtnArchive(event) {
 		        event.preventDefault();
 		

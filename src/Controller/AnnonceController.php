@@ -9,6 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Annonce;
 use App\Entity\Image;
 use App\Form\AnnonceType;
+use App\Form\AnnonceModifierType;
 use App\Entity\Type;
 use App\Entity\Compte;
 
@@ -36,7 +37,7 @@ class AnnonceController extends AbstractController
     public function consulterAnnonce(ManagerRegistry $doctrine, int $id){
         if (!$this->isGranted('ROLE_USERACTIF')) {
             return $this->forward('App\Controller\ErrorController::showAccessDenied', [
-                'exception' => new AccessDeniedException("Accès refusé ! Vous devez avoir un compte actif pour accéder à cette page.")
+                'exception' => new AccessDeniedException("Accès temporairement refusé. Veuillez patienter, votre profil est en attente de confirmation de la part de l’administrateur.")
             ]);   }
         $annonce = $doctrine->getRepository(Annonce::class)->find($id);
 
@@ -53,7 +54,7 @@ class AnnonceController extends AbstractController
     public function listerAnnonce(Request $request,ManagerRegistry $doctrine, int $idType){
         if (!$this->isGranted('ROLE_USERACTIF')) {
             return $this->forward('App\Controller\ErrorController::showAccessDenied', [
-                'exception' => new AccessDeniedException("Accès refusé ! Vous devez avoir un compte actif pour accéder à cette page.")
+                'exception' => new AccessDeniedException("Accès temporairement refusé. Veuillez patienter, votre profil est en attente de confirmation de la part de l’administrateur.")
             ]);   }
 
         $repository = $doctrine->getRepository(Annonce::class);
@@ -88,7 +89,7 @@ class AnnonceController extends AbstractController
     {
         if (!$this->isGranted('ROLE_USERACTIF')) {
             return $this->forward('App\Controller\ErrorController::showAccessDenied', [
-                'exception' => new AccessDeniedException("Accès refusé ! Vous devez avoir un compte actif pour accéder à cette page.")
+                'exception' => new AccessDeniedException("Accès temporairement refusé. Veuillez patienter, votre profil est en attente de confirmation de la part de l’administrateur.")
             ]);   }
         $annonce = new Annonce();
     
@@ -103,22 +104,23 @@ class AnnonceController extends AbstractController
             $images = $form->get('images')->getData();
             $compteConnecte = $this->getUser();
     
-            // On boucle sur les images
-            foreach ($images as $image) {
-                // On génère un nouveau nom de fichier
-                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
-    
-                // On copie le fichier dans le dossier uploads
-                $image->move(
-                    $this->getParameter('images_directory'),
-                    $fichier
-                );
-    
-                // On crée l'image dans la base de données
-                $img = new Image();
-                $img->setChemin($fichier);
-                $annonce->addImage($img);
-                $entityManager->persist($img);
+                // On boucle sur les images
+                foreach ($images as $image) {
+                    // On génère un nouveau nom de fichier
+                    $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+        
+                    // On copie le fichier dans le dossier uploads
+                    $image->move(
+                        $this->getParameter('images_directory'),
+                        $fichier
+                    );
+        
+                    // On crée l'image dans la base de données
+                    $img = new Image();
+                    $img->setChemin($fichier);
+                    $annonce->addImage($img);
+                    $entityManager->persist($img);
+                
             }
             $archive=0;
 
@@ -145,6 +147,8 @@ class AnnonceController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
     public function toggleArchive(Request $request, ManagerRegistry $doctrine, int $id)
     {
         $entityManager = $doctrine->getManager();
@@ -166,6 +170,78 @@ class AnnonceController extends AbstractController
             'message' => 'annonce archivée'
         ],200);
     }
+
+    public function modifierAnnonce(Request $request, ManagerRegistry $doctrine, int $id)
+{
+    if (!$this->isGranted('ROLE_USERACTIF')) {
+        return $this->forward('App\Controller\ErrorController::showAccessDenied', [
+            'exception' => new AccessDeniedException("Accès temporairement refusé. Veuillez patienter, votre profil est en attente de confirmation de la part de l’administrateur.")
+        ]);
+    }
+
+    $entityManager = $doctrine->getManager();
+    $annonce = $entityManager->getRepository(Annonce::class)->find($id);
+
+    if (!$annonce) {
+        throw $this->createNotFoundException('Annonce non trouvée.');
+    }
+
+    $form = $this->createForm(AnnonceModifierType::class, $annonce);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        // On récupère les images transmises
+        $images = $form->get('images')->getData();
+        $compteConnecte = $this->getUser();
+
+        if ($images){
+            foreach ($annonce->getImages() as $image){
+                $annonce->removeImage($image);
+            }
+            // On boucle sur les images
+            foreach ($images as $image) {
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+    
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+    
+                // On crée l'image dans la base de données
+                $img = new Image();
+                $img->setChemin($fichier);
+                $annonce->addImage($img);
+                $entityManager->persist($img);
+            }
+        }
+        $archive=0;
+
+        if ($form->get('pas_date_expiration')->getData() === true) {
+            $annonce->setDateExpiration(null);
+        } else {
+            $annonce->setDateExpiration($form->get('date_expiration')->getData());
+        }
+
+        $annonce->setDatePublication(new \DateTime());
+        $annonce->setArchive($archive);
+        $annonce->setCompte($compteConnecte);
+        
+
+        $entityManager->persist($annonce);
+        $entityManager->flush();
+
+        return $this->render('annonce/consulter.html.twig', [
+            'annonce' => $annonce,
+        ]);
+    }
+
+    return $this->render('annonce/modifier.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
+
 }
 
 

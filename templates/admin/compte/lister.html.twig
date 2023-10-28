@@ -41,10 +41,8 @@
 
 {% block bodyAdmin %}
 
-	{% set now = "now"|date("m/d/Y") %}
-	{% set diff = now|date_modify("-1 year") %}
-	<div class="table-responsive">
 
+	<div class="table-responsive">
 		<table>
 			<thead>
 				<tr>
@@ -53,17 +51,17 @@
 					<td>Prénom</td>
 					<td>Date d'adhésion</td>
 					<td></td>
-					<td>Date du dernier paiement</td>
+					<td>Date d'expiration</td>
 					<td></td>
 				</tr>
 			</thead>
 			{% for p in pCompte %}
+			{% if p.numAdherent != 2023000 %}
+
+
 				<tr 
 				{% if loop.last %} style="border-bottom:none;" {% endif %} 
-				{% if p.actif == 0 %} class="inactif" {% endif %} 
-				{% if p.dateDernierPaiement < diff and p.actif %}
-								class="adesaciver"
-							{% endif %}>
+				{% if p.actif == 0 %} class="inactif" {% endif %}>
 					<td>
 						<a href="{{ path('profil', { 'id': p.id }) }}">{{ p.numAdherent }}</a>
 					</td>
@@ -79,13 +77,10 @@
 						{% endif %}
 					</td>
 					<td>
-						{% if p.dateDernierPaiement %}
-							{{ p.dateDernierPaiement|date("d/m/Y") }} <br>
-							{% if p.dateDernierPaiement < diff %}
-								Il y a plus d'un an
-							{% endif %}
+						{% if p.dateExpiration %}
+							{{ p.dateExpiration|date("d/m/Y") }} <br>
 						{% else %}
-							Pas de paiement
+							Pas de date d'expiration
 						{% endif %}
 					</td>
 					<td>
@@ -93,6 +88,7 @@
 					</td>
 
 				</tr>
+				{% endif %}
 			{% else %}
 				Aucune annonce n'a été trouvé.
 			{% endfor %}

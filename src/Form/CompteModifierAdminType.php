@@ -25,7 +25,7 @@ class CompteModifierAdminType extends AbstractType
             ->add('actif', CheckboxType::class, array('label'=>'  ', 'required' => false))
             ->add('dateAdhesion', DateType::class, array('label'=>'  '))
             ->add('archive', CheckboxType::class, array('label'=>'  ', 'required' => false))
-            ->add('dateDernierPaiement',DateType::class, array('label'=>'  ', 'required' => false))
+            ->add('dateExpiration',DateType::class, array('label'=>'  ', 'required' => false))
             ->add('motifDesactivage', TextType::class, array('label'=>'  ', 'required' => false))
             ->remove('password')
             ->remove('agreeTerms')

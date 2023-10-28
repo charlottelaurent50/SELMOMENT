@@ -17,7 +17,7 @@ class CompteModifierType extends AbstractType
             ->remove('actif')
             ->remove('dateAdhesion')
             ->remove('archive')
-            ->remove('dateDernierPaiement')
+            ->remove('dateExpiration')
             ->remove('motifDesactivage')
             ->remove('agreeTerms')
             ->remove('is_adherent')

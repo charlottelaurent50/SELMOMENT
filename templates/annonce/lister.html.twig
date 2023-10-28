@@ -40,7 +40,7 @@ tr{
 				{% endfor %}
 				</div>
 			</td>
-				<td><a href="{{ path('annonceConsulter', { 'id': a.id }) }}">{{ a.titre }}</a></td>
+				<td><a href="{{ path('annonceConsulter', { 'id': a.id }) }}">{{ a.type.libelle }} : {{ a.titre }}</a></td>
 				<td>{{ a.localisation }}</td>
 		</tr>
 		{% endif %}

@@ -21,6 +21,10 @@ annonceAjouter:
     path: /annonce/ajouter/
     controller: App\Controller\AnnonceController::ajouterAnnonce
 
+annonceModifier:
+    path: /annonce/modifier/{id}
+    controller: App\Controller\AnnonceController::modifierAnnonce
+
 toggleArchive:
     path: /toggle-archive/{id}
     controller: App\Controller\AnnonceController::toggleArchive
