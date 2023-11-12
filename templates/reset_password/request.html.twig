@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block title %}Mot de passe oublié
+{% endblock %}
+{% block header %}Mot de passe oublié
+{% endblock %}
+
+{% block style %}
+	.nomChamp{
+			text-align:right;
+		    padding-right:20px;
+		}
+		table{
+		    margin:auto ;
+		}
+		
+		.row{
+		    margin:0 !important;
+		}
+
+{% endblock %}
+
+
+{% block body %}
+<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+		<div class="panel panel-default">
+			<div class="panel-body">
+	{% for flash_error in app.flashes('reset_password_error') %}
+		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+	{% endfor %}
+
+	{{ form_start(requestForm) }}
+	<table>
+		<tr>
+			<td class="nomChamp">
+				Email
+			</td>
+			<td>
+				{{ form_row(requestForm.email, {
+                        class : "form-control"
+                    }) }}
+			</td>
+		</tr>
+	</table>
+	<hr>
+    Entrez votre adrresse mail et nous vous enverros un lien pour modifier votre mot de passe
+<div class="row">
+					<button class="btn btn-action">Envoyer le mail</button>
+				</div>
+	{{ form_end(requestForm) }}
+    </div>
+    </div>
+    </div>
+{% endblock %}

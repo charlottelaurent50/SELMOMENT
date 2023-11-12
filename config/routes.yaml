@@ -73,6 +73,9 @@ mesAnnonces:
     path: /mesAnnonces/{idCompte}
     controller: App\Controller\CompteController::listerMesAnnonce
 
+reset-password:
+    path: /reset-password
+
 
 
 #admin
