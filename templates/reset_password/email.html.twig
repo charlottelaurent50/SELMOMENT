@@ -1,8 +1,13 @@
-<h1>Bonjour</h1>
+{% extends 'baseEmail.html.twig' %}
 
+
+{% block body %}
+<p>Bonjour </p>
 <p>Pour modifier votre mot de passe <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">cliquez ici</a>. </br>
 
 Ce lien expire dans
 	{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
 
 <p><b>Numéro d'adhérent</b> : {{ user.numAdherent }}</p>
+
+{% endblock %}
