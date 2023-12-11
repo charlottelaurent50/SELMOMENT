@@ -1,163 +1,166 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
-
-{% block breadcrumb %} 
-    <li class="active">Accueil</li>
+{% block title %}Accueil
 {% endblock %}
 
-{% block accueil %} class="active" {% endblock %}
+{% block breadcrumb %}
+	<li class="active">Accueil</li>
+{% endblock %}
 
-{% block header %} Accueil {% endblock %}
+{% block accueil %}
+	class="active"
+{% endblock %}
 
-{% block style %} 
-.annonce{
-    border:solid 1px #E19137 ;
-    padding:10px;
-    color:blcak;
-    text-align:center;
-    border-radius:5%;
-}
+{% block header %}
+	Accueil
+{% endblock %}
 
-.annonce table{
-}
-
-tr{
-    border-bottom:solid 1px #E19137;
-
-}
-
-.tdCarousel{
-	width:30%;
-}
-
-.annonce .tdCarousel{
-    width:40%
-}
-
-@media (max-width: 767px) {
+{% block style %}
+	.annonce{
+	    border:solid 1px #E19137 ;
+	    padding:10px;
+	    color:blcak;
+	    text-align:center;
+	    border-radius:5%;
+	}
+	
+	.annonce table{
+	}
+	
+	tr{
+	    border-bottom:solid 1px #E19137;
+	
+	}
+	
 	.tdCarousel{
-	width:50%;
-}
-}
-
-.citation{
-    font-weight: bold;
-    font-size : large;
-    color:#E19137 !important;
-    margin : 20px
-}
+		width:30%;
+	}
+	
+	.annonce .tdCarousel{
+	    width:40%
+	}
+	
+	@media (max-width: 767px) {
+		.tdCarousel{
+		width:50%;
+	}
+	}
+	
+	.citation{
+	    font-weight: bold;
+	    font-size : large;
+	    color:#E19137 !important;
+	    margin : 20px
+	}
 
 {% endblock %}
 
 {% block body %}
 
-<!-- Sidebar -->
-<aside class="col-md-4 sidebar sidebar-left">
+	<!-- Sidebar -->
+	<aside class="col-md-4 sidebar sidebar-left">
 
-    <div class="row widget">
-        <div class="col-xs-12">
-        <div class="annonce">
-            <h4>Les 5 dernières annonces : </h4>
-            <table>
-                <thead>
-                    <tr>
-                        <td>Image(s)</td>
-                        <td>Titre</td>
-                        <td>Localisation</td>
-                    </tr>
-                </thead>
-                {% for a in pAnnonces|slice(0, 5)%}
-		            {% if a.archive == 0 %}
-                        <tr {% if loop.last %}style="border-bottom:none;"{% endif %}>
-                            <td class="tdCarousel">
-                                <div class="carousel">
-                                    {% for i in a.images %}
-                                    <img src="{{ asset( 'uploads/' ~ i.chemin ) }}">
-                                    {% endfor %}
-                                </div>
-                            </td>
-                            <td>{{ a.type.libelle }} : {{ a.titre }}</td>
-                            <td>{{ a.localisation }}</td>
-                        </tr>
-                    {% endif %}
-                {% else %}
-                Aucune annonce n'a été trouvée.
-                {% endfor %}
-            </table>
-            Pour en voir plus, <a href="{{path('inscription')}}">deviens membre</a> de l'association !
-            </div>
-        </div>
-    </div>
+		<div class="row widget">
+			<div class="col-xs-12">
+				<div class="annonce">
+					<h4>Les dernières annonces :
+					</h4>
+					<table>
+						<thead>
+							<tr>
+								<td>Image(s)</td>
+								<td>Titre</td>
+								<td>Localisation</td>
+							</tr>
+						</thead>
+						{% for a in pAnnonces|slice(0, 5)%}
+							{% if a.archive == 0 %}
+								<tr {% if loop.last %} style="border-bottom:none;" {% endif %}>
+									<td class="tdCarousel">
+										<div class="carousel">
+											{% for i in a.images %}
+												<img src="{{ asset( 'uploads/' ~ i.chemin ) }}">
+											{% endfor %}
+										</div>
+									</td>
+									<td>
+										{% if a.type %}
+											{{ a.type.libelle }}
+											{% else %}Type inconnu
+										{% endif %}
+										:
+										{{ a.titre }}</td>
+									<td>{{ a.localisation }}</td>
+								</tr>
+							{% endif %}
+						{% else %}
+							Aucune annonce n'a été trouvée.
+						{% endfor %}
+					</table>
+					Pour en voir plus,
+					<a href="{{path('inscription')}}">deviens membre</a>
+					de l'association !
+				</div>
+			</div>
+		</div>
 
-</aside>
-<!-- /Sidebar -->
+	</aside>
+	<!-- /Sidebar -->
 
-<!-- Article main content -->
-<article class="col-md-8 maincontent">
-    <header class="page-header">
-        <h1 class="page-title">Le SEL c'est quoi ?</h1>
-    </header>
-    <p>Le SEL est un système d'échange qui s'inscrit dans la perspective d'une alternative au système économique actuel.</p>
-    <p>Par sa réflexion et ses pratiques, il participe à la transition vers une société plus juste, respectueuse des êtres humains et de l'environnement.</p>
-    <p>SEL Moment ! est une association à but non lucratif, loi 1901. C'est l'ensemble des adhérents qui assure son bon fonctionnement.</p>
+	<!-- Article main content -->
+	<article class="col-md-8 maincontent">
+		<header class="page-header">
+			<h1 class="page-title">Le SEL c'est quoi ?</h1>
+		</header>
+		<p>Le SEL est un système d'échange qui s'inscrit dans la perspective d'une alternative au système économique actuel.</p>
+		<p>Par sa réflexion et ses pratiques, il participe à la transition vers une société plus juste, respectueuse des êtres humains et de l'environnement.</p>
+		<p>SEL Moment ! est une association à but non lucratif, loi 1901. C'est l'ensemble des adhérents qui assure son bon fonctionnement.</p>
 
-    <p class="citation">Le lien est plus important que le bien</p>
+		<p class="citation">Le lien est plus important que le bien</p>
 
-    <h3>Le prochain événement</h3>
-    {% if nextEvent is not null %}
-    <div class="evenement">
-        <table>
-            <tr style="border-bottom:none;">
-                <td class="tdCarousel">
-                    <div class="carousel">
-                        {% for i in nextEvent.images %}
-                        <img src="{{ asset( 'uploads/' ~ i.chemin ) }}" >
-                        {% endfor %}
-                    </div>
-                </td>
-				<td>
-					<b>{{ nextEvent.titre }}</b>
-					</br>
-					{{ nextEvent.descriptif }}
-					</br>
-					Le {{ nextEvent.dateEv|date('d/m/Y') }}
-				</td>
-            </tr>
-        </table>
-    </div>
-    {% else %}
-    <p>Aucun événement à venir.</p>
-    {% endif %}
+		<h3>Le prochain événement</h3>
+		{% if nextEvent is not null %}
+			<div class="evenement">
+				<table>
+					<tr style="border-bottom:none;">
+						<td class="tdCarousel">
+							<div class="carousel">
+								{% for i in nextEvent.images %}
+									<img src="{{ asset( 'uploads/' ~ i.chemin ) }}">
+								{% endfor %}
+							</div>
+						</td>
+						<td>
+							<b>{{ nextEvent.titre }}</b>
+						</td>
+					</tr>
+				</br>
+				{{ nextEvent.descriptif }}
+			</br>
+			Le
+			{{ nextEvent.dateEv|date('d/m/Y') }}
+		</td>
+	</tr>
+</table></div>{% else %}<p>Aucun événement à venir.</p>{% endif %}<h3>Les derniers événements passés</h3><a href="{{ path('evenementLister') }}">Voir tous les événements</a><div class="evenement"><table>
 
-    <h3>Les derniers événements passés</h3>
-    <a href="{{ path('evenementLister') }}"> Voir tous les événements</a>
-        <div class="evenement">
-        <table>
+{% for event in latestEvents %}
+	<tr {% if loop.last %} style="border-bottom:none;" {% endif %}>
+		<td class="tdCarousel">
+			<div class="carousel">
+				{% for i in event.images %}
+					<img src="{{ asset( 'uploads/' ~ i.chemin ) }}">
+				{% endfor %}
+			</div>
+		</td>
+		<td>
+			<b>{{ event.titre }}</b>
+            </br>
+            {{ event.descriptif }}
+            </br>Le{{ event.dateEv|date('d/m/Y') }}
+		</td>
+	</tr>
+{% endfor %}
 
-    {% for event in latestEvents %}
-            <tr {% if loop.last %}style="border-bottom:none;"{% endif %}>
-                <td class="tdCarousel">
-                    <div class="carousel">
-                        {% for i in event.images %}
-                        <img src="{{ asset( 'uploads/' ~ i.chemin ) }}">
-                        {% endfor %}
-                    </div>
-                </td>
-				<td>
-					<b>{{ event.titre }}</b>
-					</br>
-					{{ event.descriptif }}
-					</br>
-					Le {{ event.dateEv|date('d/m/Y') }}
-				</td>
-            </tr>
-
-    {% endfor %}
-        </table>
-    </div>
-
-</article>
-<!-- /Article -->
-
-{% endblock %}
+</table>
+</div>
+</article>{% endblock %}

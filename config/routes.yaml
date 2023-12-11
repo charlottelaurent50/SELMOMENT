@@ -39,7 +39,7 @@ evenementLister:
     path: /evenement/lister/
     controller: App\Controller\EvenementController::listerEvenement
 
-eventementSupprimer:
+evenementSupprimer:
     path: /evenement/supprimer/{id}
     controller: App\Controller\EvenementController::supprimerEvenement
 
@@ -93,6 +93,12 @@ annoncesAdmin:
     path: admin/annonces
     controller: App\Controller\AdminController::listerToutesLesAnnonces
 
+annonceSupprimer:
+    path: /annonce/supprimer/{id}
+    controller: App\Controller\AnnonceController::supprimerAnnonce
+
+
+
 compteModifierAdmin:
     path: /admin/compte/modifier/{id}
     controller: App\Controller\AdminController::modifierCompteAdmin
@@ -105,7 +111,21 @@ adminAjouter:
     path: admin/create
     controller: App\Controller\AdminController::createAdmin
 
+domaineSupprimer:
+    path: admin/domaine/supprimer/{id}
+    controller: App\Controller\DomaineController::supprimerDomaine
 
+categorieSupprimer:
+    path: admin/categorie/supprimer/{id}
+    controller: App\Controller\DomaineController::supprimerCategorie
+
+typeSupprimer:
+    path: admin/type/supprimer/{id}
+    controller: App\Controller\DomaineController::supprimerType
+
+statutSupprimer:
+    path: admin/statut/supprimer/{id}
+    controller: App\Controller\DomaineController::supprimerStatut
 
 #error
 accessDenied: 

@@ -1,83 +1,118 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ annonce.titre }}{% endblock %}
+{% block title %}
+	{{ annonce.titre }}
+{% endblock %}
 
-{% block annonce %} class="active" {% endblock %}
+{% block annonce %}
+	class="active"
+{% endblock %}
 
 {% block breadcrumb %}
-<li><a href="{{path('route_accueil')}}">Accueil</a></li>
- <li><a href="{{path('annonceLister', { 'idType': 0 })}}">Les annonces</a></li> 
-<li class="active">{{ annonce.titre }}</li>
+	<li>
+		<a href="{{path('route_accueil')}}">Accueil</a>
+	</li>
+	<li>
+		<a href="{{path('annonceLister', { 'idType': 0 })}}">Les annonces</a>
+	</li>
+	<li class="active">{{ annonce.titre }}</li>
 {% endblock %}
 
-{% block header %} {{ annonce.type.libelle }} : {{ annonce.titre }} {% endblock %}
+{% block header %}
+	{% if annonce.type %}
+		{{ annonce.type.libelle }}
+		:
+		{{ annonce.titre }}
+	{% else %}
+		Type inconnu :
+		{{ annonce.titre }}
+	{% endif %}
+{% endblock %}
 
 {% block style %}
-td{
-    min-width : 100px !important;
-    padding : 5px;
-}
-
-.soustitre{
-	text-align:right;
-}
-
+	td{
+					min-width : 100px !important;
+					padding : 5px;
+					}
+								
+					.soustitre{
+					text-align:right;
+					}
 {% endblock %}
-
-
 {% block body %}
+	<div id="annonce">
 
-        <div id="annonce">
-
-            <div id="firstsection">
-                <div class="carousel">
+		<div id="firstsection">
+			<div class="carousel">
 				{% for i in annonce.images %}
 					<img src="{{ asset( 'uploads/' ~ i.chemin ) }}">
 				{% endfor %}
 
-				</div>
-
-				<p>Publié le {{annonce.datePublication|date("d/m/Y")}}</p>
-				{% if annonce.dateExpiration %}
-				<p>Expire le {{annonce.dateExpiration|date("d/m/Y")}}</p>
-				{% endif %}
 			</div>
 
-			<div id="secondsection">
-				<table class="descrAnnonce">
-					<tr>
-						<td class="soustitre">Description</td>
-						<td>{{annonce.descriptif}}</td>
-					</tr>
-					<tr>
-						<td class="soustitre">Localisation</td>
-						<td>{{annonce.localisation}}</td>
-					</tr>
-					<tr>
-						<td class="soustitre"></td>
-						<td>{{annonce.nbCloches}} &#x1F514;</td>
-					</tr>
-				</table>
-			</div>
-			
-			<div id="thirdsection">
-			<table class="descrAnnonce">
-                <tr>
-                    <td class="soustitre">Proposé par</td>
-                    <td> 
-					{% if annonce.compte %}
-						<p>{{ annonce.compte.nom }} {{ annonce.compte.prenom }}</p>
-						<p>{{ annonce.compte.telephone }}</p>
-						<p>{{ annonce.compte.email }}</p>
-					{% else %}
-						pas de compte
-					{% endif %}
-					</td>
-                </tr>
-            </table>
-
-			</div>
-        </div>
+			<p>Publié le
+				{{annonce.datePublication|date("d/m/Y")}}</p>
+			{% if annonce.dateExpiration %}
+				<p>Expire le
+					{{annonce.dateExpiration|date("d/m/Y")}}</p>
+			{% endif %}
+			{% if annonce.statut %}
+				Annonce
+				{{annonce.statut.libelle}}
+			{% endif %}
 		</div>
-	
-{% endblock %}
+
+		<div id="secondsection">
+			<table class="descrAnnonce">
+				<tr>
+					<td class="soustitre">Catégorie</td>
+					<td>
+						{% if annonce.categorie %}
+							{{annonce.categorie.libelle}}
+						{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<td class="soustitre">Domaine</td>
+					<td>
+						{% if annonce.domaine %}
+							{{annonce.domaine.libelle}}
+						{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<td class="soustitre">Description</td>
+					<td>{{annonce.descriptif}}</td>
+				</tr>
+				<tr>
+					<td class="soustitre">Localisation</td>
+					<td>{{annonce.localisation}}</td>
+				</tr>
+				<tr>
+					<td class="soustitre"></td>
+					<td>{{annonce.nbCloches}}
+						&#x1F514;</td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="thirdsection">
+			<table class="descrAnnonce">
+				<tr>
+					<td class="soustitre">Proposé par</td>
+					<td>
+						{% if annonce.compte %}
+							<p>{{ annonce.compte.nom }}
+								{{ annonce.compte.prenom }}</p>
+							<p>{{ annonce.compte.telephone }}</p>
+							<p>{{ annonce.compte.email }}</p>
+						{% else %}
+							Pas de compte
+						{% endif %}
+					</td>
+				</tr>
+			</table>
+
+		</div>
+	</div>
+</div>{% endblock %}

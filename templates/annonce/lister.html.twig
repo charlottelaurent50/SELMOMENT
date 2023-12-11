@@ -1,28 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les annonces{% endblock %}
-
-{% block annonce %} class="active" {% endblock %}
-
-{% block breadcrumb %}
-<li><a href="{{path('route_accueil')}}">Accueil</a></li> 
-<li class="active">Les annonces</li>
+{% block title %}Les annonces
 {% endblock %}
 
-{% block header %} Les annonces {% endblock %}
+{% block annonce %}
+	class="active"
+{% endblock %}
 
-{% block style %} 
-tr{
-	border-bottom:solid 1px rgba(1,1,1,0.2);
+{% block breadcrumb %}
+	<li>
+		<a href="{{path('route_accueil')}}">Accueil</a>
+	</li>
+	<li class="active">Les annonces</li>
+{% endblock %}
+
+{% block header %}
+	Les annonces
+{% endblock %}
+
+{% block style %}
+	tr{
+		border-bottom:solid 1px rgba(1,1,1,0.2);
+		}
+	.tdCarousel{
+		width:20%
 	}
-.tdCarousel{
-	width:20%
-}
 {% endblock %}
 
 {% block body %}
 
-		<table class="card">
+	<table class="card">
 		<thead>
 			<tr>
 				<td>Image(s)</td>
@@ -31,22 +38,31 @@ tr{
 			</tr>
 		</thead>
 		{% for a in pAnnonces %}
-		{% if a.archive == 0 %}
-		<tr {% if loop.last %}style="border-bottom:none;"{% endif %}>
-			<td class="tdCarousel">
-				<div class="carousel" id="carousel-{{ a.id }}">
-				{% for i in a.images %}
-					<img src="{{ asset( 'uploads/' ~ i.chemin ) }}" >
-				{% endfor %}
-				</div>
-			</td>
-				<td><a href="{{ path('annonceConsulter', { 'id': a.id }) }}">{{ a.type.libelle }} : {{ a.titre }}</a></td>
-				<td>{{ a.localisation }}</td>
-		</tr>
-		{% endif %}
-	{% else %}
-		Aucune annonce n'a été trouvée.
-	{% endfor %}
-</table>
-	
+			{% if a.archive == 0 %}
+				<tr {% if loop.last %} style="border-bottom:none;" {% endif %}>
+					<td class="tdCarousel">
+						<div class="carousel" id="carousel-{{ a.id }}">
+							{% for i in a.images %}
+								<img src="{{ asset( 'uploads/' ~ i.chemin ) }}">
+							{% endfor %}
+						</div>
+					</td>
+					<td>
+						{% if a.type %}
+							<a href="{{ path('annonceConsulter', { 'id': a.id }) }}">{{ a.type.libelle }}
+								:
+								{{ a.titre }}</a>
+						{% else %}
+							<a href="{{ path('annonceConsulter', { 'id': a.id }) }}">Type inconnu :
+								{{ a.titre }}</a>
+						{% endif %}
+					</td>
+					<td>{{ a.localisation }}</td>
+				</tr>
+			{% endif %}
+		{% else %}
+			Aucune annonce n'a été trouvée.
+		{% endfor %}
+	</table>
+
 {% endblock %}

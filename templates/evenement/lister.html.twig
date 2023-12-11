@@ -65,7 +65,7 @@ tr{
                 var eventId = $(this).data('event-id');
                 if (confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')) {
                     // Redirigez vers l'URL de suppression si confirmé
-                    window.location.href = "{{ path('eventementSupprimer', {'id': '_event_id_'}) }}".replace('_event_id_', eventId);
+                    window.location.href = "{{ path('evenementSupprimer', {'id': '_event_id_'}) }}".replace('_event_id_', eventId);
                 }
             });
         });
