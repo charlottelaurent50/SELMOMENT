@@ -39,6 +39,11 @@ evenementLister:
     path: /evenement/lister/
     controller: App\Controller\EvenementController::listerEvenement
 
+eventementSupprimer:
+    path: /evenement/supprimer/{id}
+    controller: App\Controller\EvenementController::supprimerEvenement
+
+
 
 #connexion
 

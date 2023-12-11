@@ -15,6 +15,11 @@ use Vich\UploaderBundle\Naming\SlugNamer;
 use Vich\UploaderBundle\Util\Transliterator;
 use Cocur\Slugify\Slugify;
 
+
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+use Symfony\Component\Filesystem\Filesystem;
+
 use Symfony\Component\HttpFoundation\Request;
 
 class EvenementController extends AbstractController
@@ -88,5 +93,38 @@ class EvenementController extends AbstractController
         return $this->render('evenement/lister.html.twig', [
             'pEvenements' => $evenement,]);	
             
+    }
+
+    public function supprimerEvenement(int $id, ManagerRegistry $doctrine, Filesystem $filesystem): Response
+    {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->forward('App\Controller\ErrorController::showAccessDenied', [
+                'exception' => new AccessDeniedException("Accès refusé ! Vous devez être administrateur pour accéder à cette page.")
+            ]);  
+        }
+        $entityManager = $doctrine->getManager();
+        $repository = $doctrine->getRepository(Evenement::class);
+
+        $evenement = $repository->find($id);
+
+        if (!$evenement) {
+            throw $this->createNotFoundException('Aucun événement trouvé pour l\'id '.$id);
+        }
+
+        // Suppression de l'image dans le dossier uploads
+        foreach ($evenement->getImages() as $image) {
+            $cheminImage = $this->getParameter('images_directory').'/'.$image->getChemin();
+            if ($filesystem->exists($cheminImage)) {
+                $filesystem->remove($cheminImage);
+            }
+        }
+
+        // Suppression de l'événement et de ses images dans la base de données
+        $entityManager->remove($evenement);
+        $entityManager->flush();
+
+        // Rediriger vers la liste des événements après la suppression
+        $evenements = $repository->findBy([], ['date_ev' => 'DESC']);
+        return $this->render('evenement/lister.html.twig', ['pEvenements' => $evenements]);
     }
 }

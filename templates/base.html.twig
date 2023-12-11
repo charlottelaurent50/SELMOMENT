@@ -94,7 +94,7 @@
 							</ul>
 						</li>
 						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-							{% if app.user.numAdherent == "2023000"%}
+							{% if is_granted('ROLE_ADMIN') %}
 								<li>
 									<a class="btn" href="{{ path('admin') }}">Page Admin</a>
 								</li>
