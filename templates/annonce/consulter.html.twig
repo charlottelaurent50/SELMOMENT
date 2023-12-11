@@ -27,6 +27,7 @@
 		Type inconnu :
 		{{ annonce.titre }}
 	{% endif %}
+	
 {% endblock %}
 
 {% block style %}
@@ -40,7 +41,7 @@
 					}
 {% endblock %}
 {% block body %}
-	<div id="annonce">
+	<div id="annonce" >
 
 		<div id="firstsection">
 			<div class="carousel">
@@ -62,8 +63,9 @@
 			{% endif %}
 		</div>
 
-		<div id="secondsection">
+		<div id="secondsection" {% if annonce.archive == 1 %}style="background-color:#DCDCDC;"{% endif %}>
 			<table class="descrAnnonce">
+			{% if annonce.archive == 1 %} <b>Annonce archivée</b>{% endif %}
 				<tr>
 					<td class="soustitre">Catégorie</td>
 					<td>
@@ -96,7 +98,7 @@
 			</table>
 		</div>
 
-		<div id="thirdsection">
+		<div id="thirdsection" >
 			<table class="descrAnnonce">
 				<tr>
 					<td class="soustitre">Proposé par</td>
