@@ -15,7 +15,10 @@ class IndexController extends AbstractController
     public function index(ManagerRegistry $doctrine): Response
     {
         $repository = $doctrine->getRepository(Annonce::class);
-        $annonce = $repository->findAll();
+        $annonces = $repository->createQueryBuilder('a')
+            ->orderBy('a.date_publication', 'DESC') // Tri par ordre décroissant de date de publication
+            ->getQuery()
+            ->getResult();
 
         $currentDate = (new \DateTime());
 
