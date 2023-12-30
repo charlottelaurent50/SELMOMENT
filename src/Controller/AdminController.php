@@ -43,7 +43,7 @@ class AdminController extends AbstractController
         $repository = $doctrine->getRepository(Compte::class);
         $compte = $repository->findBy(
            [],
-           ['nom' => 'ASC']
+           ['num_adherent' => 'ASC']
        );
         return $this->render('admin/compte/lister.html.twig', [
             'pCompte' => $compte,]);	
