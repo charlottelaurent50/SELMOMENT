@@ -83,7 +83,10 @@ class AnnonceController extends AbstractController
                 ->getQuery()
                 ->getResult();
         } else {
-            $annonces = $repository->findAll();
+            $annonces = $repository->createQueryBuilder('a')
+            ->orderBy('a.date_publication', 'DESC') // Tri par ordre décroissant de date de publication
+            ->getQuery()
+            ->getResult();
         }
 
         return $this->render('annonce/lister.html.twig', [
