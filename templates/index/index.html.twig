@@ -132,8 +132,6 @@
 						</td>
 						<td>
 							<b>{{ nextEvent.titre }}</b>
-						</td>
-					</tr>
 				</br>
 				{{ nextEvent.descriptif }}
 			</br>
@@ -141,7 +139,12 @@
 			{{ nextEvent.dateEv|date('d/m/Y') }}
 		</td>
 	</tr>
-</table></div>{% else %}<p>Aucun événement à venir.</p>{% endif %}<h3>Les derniers événements passés</h3><a href="{{ path('evenementLister') }}">Voir tous les événements</a><div class="evenement"><table>
+</table>
+</div>
+{% else %}
+<p>Aucun événement à venir.</p>{% endif %}
+<h3>Les derniers événements passés</h3>
+<a href="{{ path('evenementLister') }}">Voir tous les événements</a><div class="evenement"><table>
 
 {% for event in latestEvents %}
 	<tr {% if loop.last %} style="border-bottom:none;" {% endif %}>
