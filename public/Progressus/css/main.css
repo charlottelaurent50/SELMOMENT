@@ -1,3 +1,7 @@
+:root{
+	--arrow-icon: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg);
+}
+
 /* Header */
 #head { background:none; 
 	border-style: solid; 
@@ -190,4 +194,36 @@ a:hover{
 
 .body{
 	min-height:50vh !important;
+}
+
+.select {
+	/* Reset */
+	appearance: none;
+	border: 0;
+	outline: 0;
+	font: inherit;
+	/* Personalize */
+	width: 20rem;
+	padding: 1rem 4rem 1rem 1rem;
+	background: var(--arrow-icon) no-repeat right 0.8em center / 1.4em,
+		linear-gradient(to left, #FF8C00 3em, rgba(255, 255, 255, 0.2) 3em);
+	border-radius: 0.25em;
+	box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+
+	/* Remove IE arrow */
+	&::-ms-expand {
+		display: none;
+	}
+
+	/* Remove focus outline */
+	&:focus {
+		outline: none;
+	}
+
+	/* <option> colors */
+	option {
+		color: inherit;
+		background-color: white;
+	}
 }
