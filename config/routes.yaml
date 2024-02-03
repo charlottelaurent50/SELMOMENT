@@ -97,6 +97,10 @@ annonceSupprimer:
     path: /annonce/supprimer/{id}
     controller: App\Controller\AnnonceController::supprimerAnnonce
 
+envoyerEmailMensuel:
+    path: /envoyer-email-mensuel/{currentDate}
+    controller: 'App\Controller\AdminController::sendMonthlyAnnouncements'
+
 
 
 compteModifierAdmin:

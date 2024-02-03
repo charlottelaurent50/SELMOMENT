@@ -1,0 +1,7 @@
+<p>Bonjour {{ user.nom }} {{ user.prenom }}, voici les annonces du dernier mois :</p>
+{% for a in annonces %}
+<a href="{{ url('annonceConsulter', { 'id': a.id }) }}">
+<p>{{ a.titre }}</p>
+</a>
+
+{% endfor %}

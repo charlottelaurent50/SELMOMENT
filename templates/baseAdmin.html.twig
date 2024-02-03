@@ -1,44 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Admin{% endblock %}
+{% block title %}Admin
+{% endblock %}
 
-{% block breadcrumb %} 
+{% block breadcrumb %}
 	<li class="active">Admin</li>
 {% endblock %}
 
-{% block pageAdmin %} class="active" {% endblock %}
-
-{% block header %} Admin {% endblock %}
-
-{% block style %}
-
+{% block pageAdmin %}
+	class="active"
 {% endblock %}
 
+{% block header %}
+	Admin
+{% endblock %}
+
+{% block style %}{% endblock %}
+
 {% block body %}
-			<!-- Sidebar -->
-			<aside class="col-md-4bis sidebar sidebar-left">
+	<!-- Sidebar -->
+	<aside class="col-md-4bis sidebar sidebar-left">
 
-				<div class="row widget">
-					<div class="col-xs-12">
-                        <ul>
-                            <li><a href="{{ path('compteLister') }}">Les profils</a></li>
-                            <li><a href="{{ path('evenementAjouter') }}">Ajouter un evenement</a></li>
-                            <li><a href="{{ path('annoncesAdmin') }}">Les annonces</a></li>
-							<li><a href="{{ path('domaineAjouter') }}">Gestion domaine / catégorie / statut / type</a></li>
-                        </ul>
-					</div>
-				</div>
+		<div class="row widget">
+			<div class="col-xs-12">
+				<ul>
+					<li>
+						<a href="{{ path('compteLister') }}">Les profils</a>
+					</li>
+					<li>
+						<a href="{{ path('evenementAjouter') }}">Ajouter un evenement</a>
+					</li>
+					<li>
+						<a href="{{ path('annoncesAdmin') }}">Les annonces</a>
+					</li>
+					<li>
+						<a href="{{ path('domaineAjouter') }}">Gestion domaine / catégorie / statut / type</a>
+					</li>
+					{# <li><a href="{{ path('envoyer-email-mensuel', { 'month': "now"|date('F') }) }}">Envoyer e-mail mensuel de {{ "now"|date('F') }} </a> #}
 
-			</aside>
-			<!-- /Sidebar -->
+				</ul>
+<a href="{{ path('envoyerEmailMensuel', { 'currentDate': "now"|date('Y-m-d') }) }}">Envoyer l'e-mail pour {{ "now"|date('F')|trans({}, 'messages', 'fr') }}</a>
+			</div>
+		</div>
 
-			<!-- Article main content -->
-			<article class="col-md-8 maincontent">
-            {% block bodyAdmin %}
-            {% endblock %}
-			</article>
-			<!-- /Article -->
+	</aside>
+	<!-- /Sidebar -->
 
-	
+	<!-- Article main content -->
+	<article class="col-md-8 maincontent">
+		{% block bodyAdmin %}{% endblock %}
+	</article>
+	<!-- /Article -->
+
 
 {% endblock %}
