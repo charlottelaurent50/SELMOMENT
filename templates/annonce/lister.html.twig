@@ -20,32 +20,18 @@
 
 {% block style %}
 	tr{
-							border-bottom:solid 1px rgba(1,1,1,0.2);
-							}
-						.tdCarousel{
-							width:20%
-						}
+			border-bottom:solid 1px rgba(1,1,1,0.2);
+		}
+		.tdCarousel{
+			width:20%
+		}
+		select{
+			padding-top : 5px !important;
+			padding-bottom : 5px !important;
+		}
 {% endblock %}
 
 {% block body %}
-	{# <div>
-							<form method="get" action="{{ path('lister_annonce', {'idType': type.id}) }}">
-								<label for="categorie">Catégorie:</label>
-								<select id="categorie" name="categorie">
-									<option value="">Toutes les catégories</option>
-									{% for categorie in categories %}
-										<option value="{{ categorie.id }}">{{ categorie.libelle }}</option>
-									{% endfor %}
-								</select>
-								<label for="statut">Statut:</label>
-								<select id="statut" name="statut">
-									<option value="">Tous les statuts</option>
-									<option value="1">Actif</option>
-									<option value="0">Archivé</option>
-								</select>
-								<button type="submit">Filtrer</button>
-							</form>
-						</div> #}
 	<form id="filterForm">
 		<select id="type" name="type" class="select">
 			<option value="">Tous les types</option>
@@ -55,7 +41,16 @@
 				</option>
 			{% endfor %}
 		</select>
-	<button class="btn btn-action" type="submit">Filtrer</button>
+		<select id="domaine" name="domaine" class="select">
+			<option value="">Tous les domaines</option>
+			{% for p in pDomaines %}
+				<option value="{{ p.id }}" {% if p.id == filtres.domaine %} selected {% endif %}>
+					{{ p.libelle }}
+				</option>
+			{% endfor %}
+		</select>
+
+		<button class="btn btn-action" type="submit">Filtrer</button>
 
 	</form>
 
@@ -104,21 +99,21 @@
 {% block script %}
 
 	$(document).ready(function() {
-						    $('#type').change(function() {
-						        var selectedType = $(this).val();
-						        $.ajax({
-						            url: '/annonceLister?type=' + selectedType, // L'URL doit pointer vers votre action Symfony pour la liste des annonces
-						            type: 'GET',
-						            success: function(response) {
-										$('#pAnnonces').html(response); // Mettre à jour la section d'affichage des annonces avec la réponse du serveur
-						
-						            },
-						            error: function(xhr, status, error) {
-						                console.error(error);
-						            }
-						        });
-						    });
-						});
+	    $('#type').change(function() {
+	        var selectedType = $(this).val();
+	        $.ajax({
+	            url: '/annonceLister?type=' + selectedType, // L'URL doit pointer vers votre action Symfony pour la liste des annonces
+	            type: 'GET',
+	            success: function(response) {
+					$('#pAnnonces').html(response); // Mettre à jour la section d'affichage des annonces avec la réponse du serveur
+	
+	            },
+	            error: function(xhr, status, error) {
+	                console.error(error);
+	            }
+	        });
+	    });
+	});
 
 
 {% endblock %}

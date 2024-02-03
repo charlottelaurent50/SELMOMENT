@@ -203,12 +203,11 @@ a:hover{
 	outline: 0;
 	font: inherit;
 	/* Personalize */
-	width: 20rem;
-	padding: 1rem 4rem 1rem 1rem;
+	padding: 1rem 8rem 1rem 1rem;
 	background: var(--arrow-icon) no-repeat right 0.8em center / 1.4em,
 		linear-gradient(to left, #FF8C00 3em, rgba(255, 255, 255, 0.2) 3em);
 	border-radius: 0.25em;
-	box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+	border: solid 1px #FF8C00;
 	cursor: pointer;
 
 	/* Remove IE arrow */

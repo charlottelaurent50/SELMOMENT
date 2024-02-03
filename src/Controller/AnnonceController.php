@@ -12,7 +12,7 @@ use App\Form\AnnonceType;
 use App\Form\AnnonceModifierType;
 use App\Entity\Type;
 use App\Entity\Compte;
-
+use App\Entity\Domaine;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Naming\SlugNamer;
 use Vich\UploaderBundle\Util\Transliterator;
@@ -63,10 +63,12 @@ class AnnonceController extends AbstractController
                 'exception' => new AccessDeniedException("Accès temporairement refusé. Veuillez patienter, votre profil est en attente de confirmation de la part de l’administrateur.")
             ]);
         }
-        $filtres = ['type' => ''];
+        $filtres = ['type' => '', 'domaine' => ''];
 
         $typeRepository = $doctrine->getRepository(Type::class);
         $types = $typeRepository->findAll();
+        $domaineRepository = $doctrine->getRepository(Domaine::class);
+        $domaines = $domaineRepository->findAll();
 
         $annonceRepository = $doctrine->getRepository(Annonce::class);
         $queryBuilder = $annonceRepository->createQueryBuilder('a')
@@ -80,12 +82,20 @@ class AnnonceController extends AbstractController
             $filtres['type'] = $type;
         }
 
+        $domaine = $request->query->get('domaine');
+        if ($domaine) {
+            $queryBuilder->andWhere('a.domaine = :domaine')
+            ->setParameter('domaine', $domaine);
+            $filtres['domaine'] = $domaine;
+        }
+
         $annonces = $queryBuilder->getQuery()->getResult();
 
         // Rendre un rendu partiel pour mettre à jour la liste des annonces sans rafraîchir la page entière
         return $this->render('annonce/lister.html.twig', [
             'pAnnonces' => $annonces,
             'pTypes' => $types,
+            'pDomaines' => $domaines,
             'filtres' => $filtres,
         ]);
     }
