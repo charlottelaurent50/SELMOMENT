@@ -56,43 +56,41 @@ class AnnonceController extends AbstractController
         ]);
     }
 
-    public function listerAnnonce(Request $request, ManagerRegistry $doctrine, int $idType)
+    public function listerAnnonce(Request $request, ManagerRegistry $doctrine)
     {
         if (!$this->isGranted('ROLE_USERACTIF')) {
             return $this->forward('App\Controller\ErrorController::showAccessDenied', [
                 'exception' => new AccessDeniedException("Accès temporairement refusé. Veuillez patienter, votre profil est en attente de confirmation de la part de l’administrateur.")
             ]);
         }
+        $filtres = ['type' => ''];
 
-        $repository = $doctrine->getRepository(Annonce::class);
+        $typeRepository = $doctrine->getRepository(Type::class);
+        $types = $typeRepository->findAll();
 
-        if ($idType === 1) {
-            $annonces = $repository->createQueryBuilder('a')
-                ->leftJoin('a.type', 't')
-                ->andWhere('t.id = :typeId')
-                ->setParameter('typeId', 1)
-                ->orderBy('a.date_publication', 'DESC') // Tri par ordre décroissant de date de publication
-                ->getQuery()
-                ->getResult();
-        } elseif ($idType === 2) {
-            $annonces = $repository->createQueryBuilder('a')
-                ->leftJoin('a.type', 't')
-                ->andWhere('t.id = :typeId')
-                ->setParameter('typeId', 2)
-                ->orderBy('a.date_publication', 'DESC') // Tri par ordre décroissant de date de publication
-                ->getQuery()
-                ->getResult();
-        } else {
-            $annonces = $repository->createQueryBuilder('a')
-            ->orderBy('a.date_publication', 'DESC') // Tri par ordre décroissant de date de publication
-            ->getQuery()
-            ->getResult();
+        $annonceRepository = $doctrine->getRepository(Annonce::class);
+        $queryBuilder = $annonceRepository->createQueryBuilder('a')
+            ->orderBy('a.date_publication', 'DESC'); // Tri par ordre décroissant de date de publication
+
+        // Filtrer par type si le type est sélectionné dans la requête
+        $type = $request->query->get('type');
+        if ($type) {
+            $queryBuilder->andWhere('a.type = :type')
+            ->setParameter('type', $type);
+            $filtres['type'] = $type;
         }
 
+        $annonces = $queryBuilder->getQuery()->getResult();
+
+        // Rendre un rendu partiel pour mettre à jour la liste des annonces sans rafraîchir la page entière
         return $this->render('annonce/lister.html.twig', [
             'pAnnonces' => $annonces,
+            'pTypes' => $types,
+            'filtres' => $filtres,
         ]);
     }
+
+
 
     public function ajouterAnnonce(Request $request, ManagerRegistry $doctrine)
     {
@@ -260,7 +258,7 @@ class AnnonceController extends AbstractController
         if (!$this->isGranted('ROLE_ADMIN')) {
             return $this->forward('App\Controller\ErrorController::showAccessDenied', [
                 'exception' => new AccessDeniedException("Accès refusé ! Vous devez être administrateur pour accéder à cette page.")
-            ]);  
+            ]);
         }
         $entityManager = $doctrine->getManager();
         $repository = $doctrine->getRepository(Annonce::class);
@@ -268,12 +266,12 @@ class AnnonceController extends AbstractController
         $annonce = $repository->find($id);
 
         if (!$annonce) {
-            throw $this->createNotFoundException('Aucune annonce trouvée pour l\'id '.$id);
+            throw $this->createNotFoundException('Aucune annonce trouvée pour l\'id ' . $id);
         }
 
         // Suppression de l'image dans le dossier uploads
         foreach ($annonce->getImages() as $image) {
-            $cheminImage = $this->getParameter('images_directory').'/'.$image->getChemin();
+            $cheminImage = $this->getParameter('images_directory') . '/' . $image->getChemin();
             if ($filesystem->exists($cheminImage)) {
                 $filesystem->remove($cheminImage);
             }
